@@ -1,14 +1,7 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
 import "./Footer.css";
 
 const Footer = () => {
-  const location = useLocation();
-  const isLoggedIn = localStorage.getItem("token");
-
-  //  footer id hide on dashboard
-  if (isLoggedIn) return null;
-
   return (
     <div className="container-fluid bg-color1 mt-3 text-dark py-5">
       <div className="container">
@@ -56,31 +49,21 @@ const Footer = () => {
           <div className="col-12 col-md-3 text-center text-md-start">
             <h3 className="h-3 mb-3">Contact Us</h3>
 
-            <div className="footer-contact d-flex flex-column gap-2">
-              <p>
-                <a href="mailto:info@orwa.co.in" className="footer-link">
-                  Email: info@orwa.co.in
-                </a>
-              </p>
-
-              <p>
-                <a href="tel:+919888008210" className="footer-link">
-                  Phone: +91 9888008210
-                </a>
-              </p>
-            </div>
+            <p>
+              <a href="mailto:info@orwa.co.in">Email: info@orwa.co.in</a>
+            </p>
+            <p>
+              <a href="tel:+919888008210">Phone: +91 9888008210</a>
+            </p>
           </div>
 
           {/* Map */}
-          <div className="col-12 col-md-3 text-center text-md-start">
+          <div className="col-12 col-md-3">
             <iframe
-              className="footer-map"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3430.7473648625337!2d76.78071417446648!3d30.697383474601306!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390fec8cc0000001%3A0x5c3a559a3e1208f1!2sCyberbells%20ITES%20Services%20Pvt.%20Ltd!5e0!3m2!1sen!2sin!4v1765451290831!5m2!1sen!2sin"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3430.7473648625337!2d76.78071417446648!3d30.697383474601306"
               width="100%"
               height="200"
-              allowFullScreen
               loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
               title="map"
             ></iframe>
           </div>

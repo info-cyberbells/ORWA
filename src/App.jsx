@@ -1,8 +1,12 @@
 import './App.css'
-import Home from './Pages/Home'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { ToastContainer } from "react-toastify";
+
 import AppLayout from "./Layouts/App"
 import AuthLayout from "./Layouts/AuthLayout"
+
+// Pages
+import Home from './Pages/Home'
 import AboutUs from './Pages/Aboutus/AboutUs'
 import TeamSlider from './Pages/Aboutus/Teamslider/TeamSlider'
 import Constitution from "./Pages/Aboutus/Constitution/Constitution"
@@ -23,9 +27,10 @@ import OmaxeNews from './Pages/OmaxeNews/OmaxeNews'
 import FAQs from './Pages/FAQs/FAQS'
 import RefundPolicy from './Pages/Refund Policy/RefundPolicy'
 import ApplicationFrom from "./Pages/ApplicationFrom/ApplicationFrom"
+
+// Admin
 import AdminLogin from './admin/Adminlogin'
 import Dashboard from './admin/Dashboard'
-import { ToastContainer } from "react-toastify";
 import Members from './admin/Members/Members'
 import ContactList from "./admin/ContactList/ContactList";
 
@@ -34,8 +39,7 @@ function App() {
     <BrowserRouter>
       <Routes>
 
-        <Route path="/" element={<AppLayout />}>
-
+        <Route element={<AppLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/Aboutus" element={<AboutUs />} />
           <Route path="/teamSlider" element={<TeamSlider />} />
@@ -57,23 +61,21 @@ function App() {
           <Route path="/FAQs" element={<FAQs />} />
           <Route path="/RefundPolicy" element={<RefundPolicy />} />
           <Route path="/ApplicationFrom" element={<ApplicationFrom />} />
-          <Route path="/admin-Login" element={<AdminLogin />} />
-
-
-          <Route element={<AuthLayout />}>
-            <Route path="/admin-dashboard" element={<Dashboard />} />
-            <Route path="/admin-members" element={<Members />} />
-            <Route path="/admin-contactList" element={<ContactList />} />
-            {/* Add more authenticated routes here */}
-            {/* <Route path="/settings" element={<Settings />} /> */}
-          </Route>
-
         </Route>
 
+        {/*  ADMIN LOGIN (NO Header / NO Footer) */}
+        <Route path="/admin-login" element={<AdminLogin />} />
+
+        {/* ADMIN PANEL */}
+        <Route element={<AuthLayout />}>
+          <Route path="/admin-dashboard" element={<Dashboard />} />
+          <Route path="/admin-members" element={<Members />} />
+          <Route path="/admin-contactList" element={<ContactList />} />
+        </Route>
 
       </Routes>
-      <ToastContainer />
 
+      <ToastContainer />
     </BrowserRouter>
   )
 }
