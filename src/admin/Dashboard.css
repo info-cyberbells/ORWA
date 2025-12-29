@@ -1,0 +1,40 @@
+.dashboard {
+  background: #f4f6f9;
+  font-family: 'Segoe UI', sans-serif;
+  min-height: 100vh;
+}
+
+
+
+
+
+/* Main content */
+.main-content {
+  padding: 20px 30px;
+}
+
+/* Top bar */
+.top-bar i {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Stat card */
+.stat-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  transition: 0.3s;
+}
+
+.stat-card i {
+  font-size: 30px;
+  font-weight: bold;
+  color: #63f182;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}

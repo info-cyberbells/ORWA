@@ -1,0 +1,57 @@
+.form-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  padding: 30px;
+}
+
+.form-title {
+  font-weight: 700;
+  color: #1e6f5c;
+  border-left: 6px solid #1e6f5c;
+  padding-left: 12px;
+  margin-bottom: 25px;
+}
+
+label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #444;
+}
+
+.form-control,
+.form-select {
+  border-radius: 10px;
+}
+
+.upload-box {
+  border: 1px solid #1e6f5c;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+  background: #f9fffd;
+}
+
+.upload-box input {
+  display: none;
+}
+
+.upload-box label {
+  cursor: pointer;
+  color: #708b85;
+  font-weight: 600;
+}
+
+.btn-submit {
+  background: #1e6f5c;
+  color: #fff;
+  padding: 10px 30px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.btn-submit:hover {
+  background: #155a4a;
+}

@@ -1,0 +1,56 @@
+.team-slider-wrap {
+  padding: 0 40px;
+}
+
+.team-slider-card {
+  background: #e5e5e5;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  height: 100%;
+}
+
+.team-slider-img {
+  width: 90%;
+  height: 90%;
+  border-radius: 4px;
+  object-fit: cover;
+  margin: 0 auto 10px;
+}
+
+.team-slider-name {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.team-slider-role {
+  color: #666;
+  font-size: 14px;
+}
+
+.team-slider-desc {
+  font-size: 14px;
+  margin-top: 10px;
+  color: #333;
+}
+
+.slick-prev, .slick-next {
+  display: block !important;  
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  font-size: 50px !important;
+  color: #000 !important;  
+}
+
+.slick-prev {
+  left: -50px !important;
+}
+
+/* .slick-next {
+  right: 50px ;
+} */

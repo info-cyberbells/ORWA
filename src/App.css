@@ -1,0 +1,162 @@
+/* Navbar */
+ 
+ 
+ 
+ .logo {
+    height: 60px;
+  }
+
+  .navbar .nav-link {
+    color: #0b3d2e; 
+    font-weight: 500;
+  }
+
+  .navbar .nav-link:hover {
+    text-decoration: underline;
+    color: #0b3d2e;
+  }
+.navbar .dropdown:hover .dropdown-menu {
+  display: block;
+      border: 2px solid rgb(30, 66, 0);
+
+}
+
+.dropdown-submenu {
+  position: relative;
+
+}
+
+.dropdown-submenu .dropdown-menu {
+  top: 0;       
+  left: 100%;   
+  display: none; 
+  position: absolute;
+  margin: 0;
+  border: 2px solid rgb(30, 66, 0);
+}
+
+.dropdown-submenu:hover .dropdown-menu {
+  display: block;
+}
+
+
+  .custom-btn {
+    border-radius: 8px;
+    padding: 6px 18px;
+    font-weight: 500;
+  }
+
+  
+ /* Navbar end */
+
+
+ /* Banner */
+
+
+.mar { 
+  color: red;
+  padding: 5px;
+  background: #fff;
+}
+
+.Banner-img {
+  width: 100% !important;
+  height: 500px;
+  object-fit: cover;
+  display: block;
+  position: relative;
+}
+
+.banner-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(58, 58, 58, 0.45);
+  z-index: 1;
+}
+
+/* Text above overlay */
+.position-absolute {
+  z-index: 2 !important;
+}
+
+.Banner-font {
+  font-weight: 700;
+  color: #fdf9f9;
+  font-size: 30px;
+
+}
+
+
+.community-text {
+  color: #35f505;  
+}
+
+.banner-btn{
+  background-color: rgb(247, 56, 56);
+  border-radius: 4px;
+  padding: 12px 25px;   
+  border: 0;
+  color: white;
+  font-weight: 500;
+}
+ /* Banner  end */
+
+  /* Explore Our Services */
+  h3{
+    color: rgb(0, 0, 75);
+  }
+.subtext {
+  max-width: min(90%, 700px);
+  font-size: 16px ;
+  line-height: 1.6;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.service-card {
+  border-radius: 2px;
+  border: 1px solid #6e6d02;
+  width: 100%;
+  box-sizing: border-box;
+
+}
+
+
+  /* Explore Our Services end */
+
+
+ /* Members' Experiences */
+ .bg-color{
+  background-color: rgb(141, 149, 38);
+ }
+ .feedback{
+   max-Width: 900px;
+    margin: 0 auto;
+ }
+
+ /* Members' Experiences  end*/
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

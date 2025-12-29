@@ -1,0 +1,10 @@
+.terms-box {
+  max-width: 850px;
+  background: #f8f9fa;
+  padding: 25px;
+  border-radius: 10px;
+}
+
+.terms-box h5 {
+  color: #198754;
+}

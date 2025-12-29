@@ -1,0 +1,36 @@
+.agm-box {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.agm-title {
+  color: #1b5e20;
+  font-weight: 700;
+  border-bottom: 3px solid #c8e6c9;
+  padding-bottom: 10px;
+}
+
+.agm-section {
+  margin-top: 30px;
+}
+
+.agm-section h5 {
+  color: #2e7d32;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.agm-section p {
+  color: #555;
+  line-height: 1.7;
+}
+
+.agm-list {
+  padding-left: 20px;
+}
+
+.agm-list li {
+  margin-bottom: 8px;
+  color: #444;
+}

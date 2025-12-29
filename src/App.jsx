@@ -1,0 +1,81 @@
+import './App.css'
+import Home from './Pages/Home'
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import AppLayout from "./Layouts/App"
+import AuthLayout from "./Layouts/AuthLayout"
+import AboutUs from './Pages/Aboutus/AboutUs'
+import TeamSlider from './Pages/Aboutus/Teamslider/TeamSlider'
+import Constitution from "./Pages/Aboutus/Constitution/Constitution"
+import Events from './Pages/Events/Events'
+import DandiyaNight from './Pages/DandiyaNight/DandiyaNight'
+import AGM2025 from './Pages/DandiyaNight/AGM/AGM2025'
+import DandiyaNightRegistration from './Pages/DandiyaNight/DandiyaNightRegistration'
+import StallBooking from './Pages/DandiyaNight/StallBooking'
+import AGMs from './Pages/AGMs/AGMs'
+import AGMArchiveSection from "./Pages/AGMs/AGMArchiveSection"
+import AGMViewDetails2025 from "./Pages/AGMs/AGMViewDetails2025"
+import Memberdirectory from "./Pages/MemberDirectory/Memberdirectory"
+import JoinUs from './Pages/MemberDirectory/JoinUs'
+import Volunteer from "./Pages/Volunteer/Volunteer"
+import ContactUs from './Pages/ContactUs/ContactUs'
+import TeamCondition from './Pages/Terms&Conditions/TeamCondition'
+import OmaxeNews from './Pages/OmaxeNews/OmaxeNews'
+import FAQs from './Pages/FAQs/FAQS'
+import RefundPolicy from './Pages/Refund Policy/RefundPolicy'
+import ApplicationFrom from "./Pages/ApplicationFrom/ApplicationFrom"
+import AdminLogin from './admin/Adminlogin'
+import Dashboard from './admin/Dashboard'
+import { ToastContainer } from "react-toastify";
+import Members from './admin/Members/Members'
+import ContactList from "./admin/ContactList/ContactList";
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+
+        <Route path="/" element={<AppLayout />}>
+
+          <Route path="/" element={<Home />} />
+          <Route path="/Aboutus" element={<AboutUs />} />
+          <Route path="/teamSlider" element={<TeamSlider />} />
+          <Route path="/constitution" element={<Constitution />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/DandiyaNight" element={<DandiyaNight />} />
+          <Route path="/DandiyaNightRegistration" element={<DandiyaNightRegistration />} />
+          <Route path="/StallBooking" element={<StallBooking />} />
+          <Route path="/AGM2025" element={<AGM2025 />} />
+          <Route path="/AGMs" element={<AGMs />} />
+          <Route path="/AGMArchiveSection" element={<AGMArchiveSection />} />
+          <Route path="/AGMViewDetails2025" element={<AGMViewDetails2025 />} />
+          <Route path="/Memberdirectory" element={<Memberdirectory />} />
+          <Route path="/JoinUs" element={<JoinUs />} />
+          <Route path="/Volunteer" element={<Volunteer />} />
+          <Route path="/ContactUs" element={<ContactUs />} />
+          <Route path="/TeamCondition" element={<TeamCondition />} />
+          <Route path="/OmaxeNews" element={<OmaxeNews />} />
+          <Route path="/FAQs" element={<FAQs />} />
+          <Route path="/RefundPolicy" element={<RefundPolicy />} />
+          <Route path="/ApplicationFrom" element={<ApplicationFrom />} />
+          <Route path="/admin-Login" element={<AdminLogin />} />
+
+
+          <Route element={<AuthLayout />}>
+            <Route path="/admin-dashboard" element={<Dashboard />} />
+            <Route path="/admin-members" element={<Members />} />
+            <Route path="/admin-contactList" element={<ContactList />} />
+            {/* Add more authenticated routes here */}
+            {/* <Route path="/settings" element={<Settings />} /> */}
+          </Route>
+
+        </Route>
+
+
+      </Routes>
+      <ToastContainer />
+
+    </BrowserRouter>
+  )
+}
+
+export default App

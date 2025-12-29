@@ -1,0 +1,19 @@
+.news-section {
+  background: #8a9a2a;
+}
+
+
+.top-banner {
+  background: #8a9a2f;
+  padding: 70px 20px;
+}
+
+.event-item {
+  padding: 10px 0;
+}
+
+hr {
+  border-top: 1px solid #2e7d32;
+  opacity: 0.4;
+}
+

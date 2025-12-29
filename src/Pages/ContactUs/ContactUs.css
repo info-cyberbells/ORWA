@@ -1,0 +1,28 @@
+
+.contact-header .description {
+  max-width: 600px;
+  font-size: 14px;
+}
+
+
+.contact-item h5 {
+  color: #2e7d32;
+}
+
+.membership-box {
+  background: #e6e6e6;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.membership-box:hover {
+  background: #cfd3d6;
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+

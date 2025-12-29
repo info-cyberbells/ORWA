@@ -1,0 +1,157 @@
+/* Aboutus page */
+
+      /* /* banner section  / */
+
+.Banner-img {
+  width: 100% !important;
+  height: 500px;
+  object-fit: cover;
+  display: block;
+}
+
+.img-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(68, 68, 68, 0.45);
+  z-index: 1;
+}
+
+.img-font {
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 32px;
+}
+
+.About-text {
+  max-width: 700px;
+  z-index: 2; 
+}
+      /* banner section  end */
+
+ /* Our Mession section */
+.section-box {
+  padding: 20px 0;
+}
+
+.mission-title {
+  font-weight: 700;
+  color: #146c43;
+}
+
+.mission-desc {
+  line-height: 1.6;
+}
+
+.learn-btn {
+  border: 1px solid #146c43;
+  color: #146c43;
+  padding: 8px 22px;
+  background: none;
+  transition: 0.3s;
+}
+
+.learn-btn:hover {
+  background: #146c43;
+  color: #fff;
+}
+
+.mission-img {
+  width: 100%;
+  border-radius: 5px;
+  object-fit: cover;
+}
+/* Our Mession section end */
+
+
+/* Our jounery section */
+.timeline-line {
+  width: 2px;
+  background-color: green;
+  height: 100%;
+}
+
+.timeline-card {
+  border: 1px solid green;
+  padding: 30px;
+  border-radius: 5px;
+  background: white;
+  width: 630px; 
+  max-width: 100%; 
+}
+
+.timeline-card-text{
+  color: #1a4f24;
+  font-size: 23px;
+  font-weight: bold;
+  padding: 5px;
+}
+/* Our jounery section end */
+
+
+
+
+ /* Co-opt Members section */
+
+.members-title {
+  color: #1d522c;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.lines-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 120px;
+  margin: 10px auto 0;
+}
+
+.line {
+  height: 2px;
+  background: #cfcfcf;
+  width: 100%;
+}
+
+
+.review-section {
+  background: #8c9326; 
+  padding: 100px;
+}
+
+.review-title {
+  color: white;
+  font-weight: 700;
+  margin-bottom: 15px;
+
+}
+
+.review-text {
+  color: white;
+  max-width: 600px;
+  margin: auto;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+ /* Co-opt Members section  end*/
+
+
+/* Join section */
+
+.join-box {
+  border: 2px solid #8d9b5d;
+  border-radius: 5px;
+  max-width: 900px;
+  width: 100%;
+}
+
+
+ul li {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* .join section end */
