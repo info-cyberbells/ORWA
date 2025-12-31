@@ -28,6 +28,7 @@ import FAQs from './Pages/FAQs/FAQS'
 import RefundPolicy from './Pages/Refund Policy/RefundPolicy'
 import ApplicationFrom from "./Pages/ApplicationFrom/ApplicationFrom"
 
+
 // Admin
 import AdminLogin from './admin/Adminlogin'
 import Dashboard from './admin/Dashboard'
@@ -61,6 +62,7 @@ function App() {
           <Route path="/FAQs" element={<FAQs />} />
           <Route path="/RefundPolicy" element={<RefundPolicy />} />
           <Route path="/ApplicationFrom" element={<ApplicationFrom />} />
+
         </Route>
 
         {/*  ADMIN LOGIN (NO Header / NO Footer) */}
@@ -71,6 +73,7 @@ function App() {
           <Route path="/admin-dashboard" element={<Dashboard />} />
           <Route path="/admin-members" element={<Members />} />
           <Route path="/admin-contactList" element={<ContactList />} />
+
         </Route>
 
       </Routes>

@@ -72,4 +72,21 @@ export const getResidentialMemberById = async (id) => {
 };
 
 
+// Update residential member
+export const updateResidentialMember = async (id, updatedData) => {
+  const response = await axios.put(
+    `${USER_ENDPOINTS.GET_SINGLE_RESIDENTIALS}/${id}`,
+    updatedData,
+    {
+      ...getAuthHeader(),
+      headers: {
+        ...getAuthHeader().headers,
+      },
+    }
+  );
+  return response.data;
+};
+
+
+
 

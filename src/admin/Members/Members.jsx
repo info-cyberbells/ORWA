@@ -2,14 +2,22 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMembers, fetchMemberById, resetMembersState } from "../../features/membersSlice";
-import { Eye, UserCheck, UserX, Clock, X } from "lucide-react";
+import { Eye, UserCheck, UserX, Clock, X, Edit, Trash2 } from "lucide-react";
+import { updateMember } from "../../features/membersSlice";
+
+
 import "./Members.css";
 
 const Members = () => {
     const dispatch = useDispatch();
     const [membershipStatus, setMembershipStatus] = useState("");
+    const [selectedIds, setSelectedIds] = useState([]);
+    const [SelectedMember, setSelectedMember] = useState(null);
 
-    const { members, loading, page, totalPages, statusCounts, selectedMember } =
+
+
+
+    const { members, loading, page, totalPages, statusCounts, selectedMember, } =
         useSelector((state) => state.members);
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -17,11 +25,56 @@ const Members = () => {
     useEffect(() => {
         dispatch(fetchMembers({ page: currentPage, limit: 10 }));
     }, [dispatch, currentPage]);
+    
+    useEffect(() => {
+        if (selectedMember) {
+            setSelectedMember(selectedMember);
+            setMembershipStatus(selectedMember.membershipStatus || "");
+        }
+    }, [selectedMember]);
+
 
     const handleViewDetails = (member) => {
         dispatch(fetchMemberById(member._id));
         setMembershipStatus(member.membershipStatus);
     };
+    const handleCheckbox = (id) => {
+        setSelectedIds((prev) =>
+            prev.includes(id)
+                ? prev.filter((i) => i !== id)
+                : [...prev, id]
+        );
+    };
+
+    const handleSelectAll = () => {
+        if (!members?.length) return;
+
+        setSelectedIds((prev) =>
+            prev.length === members.length ? [] : members.map((m) => m._id)
+        );
+    };
+    const handleUpdate = () => {
+        if (!SelectedMember) return;
+
+        // Prepare payload
+        const updatedData = {
+            ...SelectedMember,
+            membershipStatus,
+        };
+
+        dispatch(updateMember({ id: SelectedMember._id, updatedData }))
+            .unwrap()
+            .then(() => {
+                alert("Member updated successfully!");
+                closeModal();
+                dispatch(fetchMembers({ page: currentPage, limit: 10 })); // refresh table
+            })
+            .catch((err) => {
+                alert("Update failed: " + err);
+            });
+    };
+
+
 
     const getStatusBadge = (status) => {
         const styles = {
@@ -33,9 +86,11 @@ const Members = () => {
     };
 
 
-    const closeModal = () => {
-        dispatch(resetMembersState());
-    };
+const closeModal = () => {
+  setSelectedMember(null);
+  dispatch(resetMembersState());
+};
+
 
     const getRowNumber = (index) => {
         return (currentPage - 1) * 10 + index + 1;
@@ -114,29 +169,42 @@ const Members = () => {
                         <table className="table members-table mb-0">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th>
+                                        <input
+                                            type="checkbox"
+                                            onChange={handleSelectAll}
+                                            checked={
+                                                members.length > 0 &&
+                                                selectedIds.length === members.length
+                                            }
+                                        />
+                                    </th>
+
                                     <th>Name</th>
                                     <th>Father/ Husband/Mother /Wife's Name</th>
-                                    <th>Date</th>
-                                    {/* <th>Flat/Villa</th> */}
+                                    <th style={{ textAlign: "center" }}>Date</th>
                                     <th>Status</th>
-                                    <th>Action</th>
+                                    <th style={{ textAlign: "center" }}>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {members.map((member, index) => (
                                     <tr key={member._id}>
                                         <td>
-                                            <span className="row-number">{getRowNumber(index)}</span>
+                                            <input
+                                                type="checkbox"
+                                                checked={selectedIds.includes(member._id)}
+                                                onChange={() => handleCheckbox(member._id)}
+                                            />
                                         </td>
                                         <td className="fw-semibold">
                                             {`${member.firstName} ${member.lastName}`}
                                         </td>
                                         <td style={{ textAlign: "center" }}>
-                                            {showValue(member.relationName)}  
+                                            {showValue(member.relationName)}
                                         </td>
                                         <td>
-                   
+
                                             {member.createdAt
                                                 ? new Date(member.createdAt).toLocaleString("en-GB", {
                                                     day: "2-digit",
@@ -148,21 +216,43 @@ const Members = () => {
                                                 })
                                                 : "-"}
                                         </td>
-                                        {/* <td>{member.phone}</td> */}
                                         <td>
                                             <span className={getStatusBadge(member.membershipStatus)}>
                                                 {member.membershipStatus}
                                             </span>
                                         </td>
-                                        <td>
-                                            <button
-                                                onClick={() => handleViewDetails(member)}
-                                                className="btn btn-outline-success btn-sm"
-                                            >
-                                                <Eye size={16} strokeWidth={2} />
-                                                View
-                                            </button>
+                                        <td style={{ textAlign: "center" }}>
+                                            <div className="d-inline-flex align-items-center gap-2 justify-content-center">
+
+                                                <button
+                                                    onClick={() => handleViewDetails(member)}
+                                                    className="btn btn-outline-success btn-sm d-flex align-items-center gap-1"
+                                                >
+                                                    <Eye size={16} strokeWidth={2} />
+                                                    View
+                                                </button>
+
+                                                <button
+                                                    className="btn btn-outline-primary btn-sm d-flex align-items-center gap-1"
+                                                    onClick={() => handleViewDetails(member)}
+
+                                                >
+                                                    <Edit size={16} strokeWidth={2} />
+                                                    Edit
+                                                </button>
+
+                                                <button
+                                                    className="btn btn-outline-danger btn-sm d-flex align-items-center gap-1"
+                                                    onClick={() => handleDelete(member._id)}
+                                                >
+                                                    <Trash2 size={16} strokeWidth={2} />
+                                                    Delete
+                                                </button>
+
+
+                                            </div>
                                         </td>
+
                                     </tr>
                                 ))}
                             </tbody>
@@ -192,155 +282,173 @@ const Members = () => {
             </div>
 
             {/* Modal */}
-            {/* Modal */}
-            {selectedMember && (
-                <>
-                    <div className="modal-backdrop" onClick={closeModal}></div>
-                    <div className="modal-dialog-centered">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h2>Member Details</h2>
-                                <button onClick={closeModal} className="btn-close">
-                                    <X size={24} />
-                                </button>
-                            </div>
+          {SelectedMember && (
+  <div
+    className="modal-wrapper"
+    style={{
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      zIndex: 1050,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    }}
+    onClick={closeModal}
+  >
+    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="modal-header"
+        style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
+      >
+        <h2>Member Details</h2>
+        <button onClick={closeModal} className="btn-close">
+          <X size={24} />
+        </button>
+      </div>
 
-                            <div className="modal-body">
-                                <div className="row g-3">
+      <div className="modal-body">
+        <div className="row g-3">
+          {/* Personal Info */}
+          <div className="col-12"><h6 className="section-title">Personal Information</h6></div>
 
-                                    {/* Personal Info */}
-                                    <div className="col-12">
-                                        <h6 className="section-title">Personal Information</h6>
-                                    </div>
+          <div className="col-12">
+            <label>First Name</label>
+            <input
+              type="text"
+              className="form-control"
+              value={SelectedMember.firstName || ""}
+              onChange={(e) => setSelectedMember({ ...SelectedMember, firstName: e.target.value })}
+            />
+          </div>
 
-                                    <div className="col-12"><div className="detail-group"><label>First Name</label><p>{showValue(selectedMember.firstName)}</p></div></div>
-                                    <div className="col-12"><div className="detail-group"><label>Middle Name</label><p>{showValue(selectedMember.middleName)}</p></div></div>
-                                    <div className="col-12"><div className="detail-group"><label>Last Name</label><p>{showValue(selectedMember.lastName)}</p></div></div>
-                                    <div className="col-12"><div className="detail-group"><label>Full Name</label><p>{showValue(selectedMember.name)}</p></div></div>
-                                    <div className="col-12"><div className="detail-group"><label>Date of Birth</label><p>{selectedMember.dateOfBirth ? new Date(selectedMember.dateOfBirth).toLocaleDateString() : "-"}</p></div></div>
-                                    <div className="col-12"><div className="detail-group"><label>Email</label><p>{showValue(selectedMember.email)}</p></div></div>
-                                    <div className="col-12"><div className="detail-group"><label>Phone</label><p>{showValue(selectedMember.phone)}</p></div></div>
-                                    <div className="col-12"><div className="detail-group"><label>Occupation</label><p>{showValue(selectedMember.occupation)}</p></div></div>
-                                    <div className="col-12"><div className="detail-group"><label>Living Here</label><p>{selectedMember.livingHere ? "Yes" : "No"}</p></div></div>
-                                    <div className="col-12"><div className="detail-group"><label>Traveling</label><p>{selectedMember.traveling ? "Yes" : "No"}</p></div></div>
+          <div className="col-12">
+            <label>Middle Name</label>
+            <input
+              type="text"
+              className="form-control"
+              value={SelectedMember.middleName || ""}
+              onChange={(e) => setSelectedMember({ ...SelectedMember, middleName: e.target.value })}
+            />
+          </div>
 
-                                    {/* Relation Info */}
-                                    <div className="col-12"><h6 className="section-title">Relation Information</h6></div>
-                                    <div className="col-12"><div className="detail-group"><label>Relation First Name</label><p>{showValue(selectedMember.relationName)}</p></div></div>
-                                    <div className="col-12"><div className="detail-group"><label>Relation Middle Name</label><p>{showValue(selectedMember.relationMiddleName)}</p></div></div>
-                                    <div className="col-12"><div className="detail-group"><label>Relation Last Name</label><p>{showValue(selectedMember.relationLastName)}</p></div></div>
+          <div className="col-12">
+            <label>Last Name</label>
+            <input
+              type="text"
+              className="form-control"
+              value={SelectedMember.lastName || ""}
+              onChange={(e) => setSelectedMember({ ...SelectedMember, lastName: e.target.value })}
+            />
+          </div>
 
-                                    {/* Residence */}
-                                    <div className="col-12"><h6 className="section-title">Residence Details</h6></div>
-                                    <div className="col-12"><div className="detail-group"><label>Flat Number</label><p>{showValue(selectedMember.flatNumber)}</p></div></div>
-                                    <div className="col-12"><div className="detail-group"><label>Floor</label><p>{showValue(selectedMember.floor)}</p></div></div>
-                                    <div className="col-12"><div className="detail-group"><label>Scheme</label><p>{showValue(selectedMember.scheme)}</p></div></div>
-                                    <div className="col-12"><div className="detail-group"><label>Family Members</label><p>{showValue(selectedMember.familyMembersCount)}</p></div></div>
+          <div className="col-12">
+            <label>Full Name</label>
+            <input
+              type="text"
+              className="form-control"
+              value={SelectedMember.name || ""}
+              onChange={(e) => setSelectedMember({ ...SelectedMember, name: e.target.value })}
+            />
+          </div>
 
-                                    {/* Address */}
-                                    <div className="col-12"><h6 className="section-title">Address Information</h6></div>
-                                    <div className="col-12"><div className="detail-group"><label>Correspondence Address</label><p>{showValue(selectedMember.correspondenceAddress)}</p></div></div>
-                                    <div className="col-12"><div className="detail-group"><label>City</label><p>{showValue(selectedMember.city)}</p></div></div>
-                                    <div className="col-12"><div className="detail-group"><label>State</label><p>{showValue(selectedMember.state)}</p></div></div>
-                                    <div className="col-12"><div className="detail-group"><label>Country</label><p>{showValue(selectedMember.country)}</p></div></div>
-                                    <div className="col-12"><div className="detail-group"><label>Postal Code</label><p>{showValue(selectedMember.postalCode)}</p></div></div>
+          <div className="col-12">
+            <label>Date of Birth</label>
+            <input
+              type="date"
+              className="form-control"
+              value={SelectedMember.dateOfBirth ? SelectedMember.dateOfBirth.split("T")[0] : ""}
+              onChange={(e) => setSelectedMember({ ...SelectedMember, dateOfBirth: e.target.value })}
+            />
+          </div>
 
-                                    {selectedMember.address && (
-                                        <div className="col-12">
-                                            <div className="detail-group">
-                                                <label>Additional Address</label>
-                                                <p>{showValue(selectedMember.address)}</p>
-                                            </div>
-                                        </div>
-                                    )}
+          <div className="col-12">
+            <label>Email</label>
+            <input
+              type="email"
+              className="form-control"
+              value={SelectedMember.email || ""}
+              onChange={(e) => setSelectedMember({ ...SelectedMember, email: e.target.value })}
+            />
+          </div>
 
-                                    {/* Skills */}
-                                    <div className="col-12">
-                                        <div className="detail-group">
-                                            <label>Hobbies & Skills</label>
-                                            <p>{showValue(selectedMember.hobbiesAndSkills)}</p>
-                                        </div>
-                                    </div>
+          <div className="col-12">
+            <label>Phone</label>
+            <input
+              type="text"
+              className="form-control"
+              value={SelectedMember.phone || ""}
+              onChange={(e) => setSelectedMember({ ...SelectedMember, phone: e.target.value })}
+            />
+          </div>
 
-                                    {/* Documents – UNCHANGED */}
-                                    <div className="col-12"><h6 className="section-title">Documents</h6></div>
+          <div className="col-12">
+            <label>Occupation</label>
+            <input
+              type="text"
+              className="form-control"
+              value={SelectedMember.occupation || ""}
+              onChange={(e) => setSelectedMember({ ...SelectedMember, occupation: e.target.value })}
+            />
+          </div>
 
-                                    {selectedMember.identityProofDocument && (
-                                        <div className="col-md-6">
-                                            <div className="detail-group">
-                                                <label>Identity Proof ({selectedMember.identityProofType})</label>
-                                                <a href={selectedMember.identityProofDocument} target="_blank" rel="noreferrer" className="btn btn-sm btn-outline-primary">View Document</a>
-                                            </div>
-                                        </div>
-                                    )}
+          <div className="col-6 form-check">
+            <input
+              type="checkbox"
+              className="form-check-input"
+              checked={SelectedMember.livingHere}
+              onChange={(e) => setSelectedMember({ ...SelectedMember, livingHere: e.target.checked })}
+            />
+            <label className="form-check-label">Living Here</label>
+          </div>
 
-                                    {selectedMember.addressProofDocument && (
-                                        <div className="col-md-6">
-                                            <div className="detail-group">
-                                                <label>Address Proof ({selectedMember.addressProofType})</label>
-                                                <a href={selectedMember.addressProofDocument} target="_blank" rel="noreferrer" className="btn btn-sm btn-outline-primary">View Document</a>
-                                            </div>
-                                        </div>
-                                    )}
+          <div className="col-6 form-check">
+            <input
+              type="checkbox"
+              className="form-check-input"
+              checked={SelectedMember.traveling}
+              onChange={(e) => setSelectedMember({ ...SelectedMember, traveling: e.target.checked })}
+            />
+            <label className="form-check-label">Traveling</label>
+          </div>
 
-                                    {selectedMember.ownershipProofDocument && (
-                                        <div className="col-md-6">
-                                            <div className="detail-group">
-                                                <label>Ownership Proof ({selectedMember.ownershipProofType})</label>
-                                                <a href={selectedMember.ownershipProofDocument} target="_blank" rel="noreferrer" className="btn btn-sm btn-outline-primary">View Document</a>
-                                            </div>
-                                        </div>
-                                    )}
+          {/* Membership Status */}
+          <div className="col-6">
+            <label>Membership Status</label>
+            <select
+              className="form-select"
+              value={membershipStatus}
+              onChange={(e) => setMembershipStatus(e.target.value)}
+            >
+              <option value="active">Active</option>
+              <option value="pending">Pending</option>
+            </select>
+          </div>
 
-                                    {selectedMember.signature && (
-                                        <div className="col-md-6">
-                                            <div className="detail-group">
-                                                <label>Signature</label>
-                                                <img src={selectedMember.signature} className="img-fluid rounded" style={{ maxHeight: "100px" }} />
-                                            </div>
-                                        </div>
-                                    )}
+          {/* Society ID */}
+          <div className="col-12">
+            <label>Society ID</label>
+            <input
+              type="text"
+              className="form-control"
+              value={SelectedMember.societyId || ""}
+              onChange={(e) => setSelectedMember({ ...SelectedMember, societyId: e.target.value })}
+            />
+          </div>
+        </div>
+      </div>
 
-                                    {selectedMember.applicantPhoto && (
-                                        <div className="col-md-6">
-                                            <div className="detail-group">
-                                                <label>Applicant Photo</label>
-                                                <img src={selectedMember.applicantPhoto} className="img-fluid rounded" style={{ maxHeight: "150px" }} />
-                                            </div>
-                                        </div>
-                                    )}
+      <div className="modal-footer">
+        <button onClick={handleUpdate} className="btn btn-primary">Update</button>
+        <button onClick={closeModal} className="btn btn-secondary">Close</button>
+      </div>
+    </div>
+  </div>
+)}
 
-                                    {/* Additional Info */}
-                                    <div className="col-12"><h6 className="section-title">Additional Information</h6></div>
-                                    <div className="col-12"><div className="detail-group"><label>Role</label><p>{showValue(selectedMember.role)}</p></div></div>
-                                    <div className="col-12"><div className="detail-group"><label>Request Source</label><p>{showValue(selectedMember.requestSource)}</p></div></div>
-                                    <div className="col-12"><div className="detail-group"><label>Active Status</label><p>{selectedMember.isActive ? "Yes" : "No"}</p></div></div>
 
-                                    <div className="col-12">
-                                        <div className="detail-group">
-                                            <label>Membership Status</label>
-                                            <select className="form-select" value={membershipStatus} onChange={(e) => setMembershipStatus(e.target.value)}>
-                                                <option value="active">Active</option>
-                                                <option value="pending">Pending</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-12"><div className="detail-group"><label>Society ID</label><p>{showValue(selectedMember.societyId)}</p></div></div>
-                                    <div className="col-12"><div className="detail-group"><label>Joined Date</label><p>{selectedMember.createdAt ? new Date(selectedMember.createdAt).toLocaleDateString() : "-"}</p></div></div>
-                                    <div className="col-12"><div className="detail-group"><label>Last Updated</label><p>{selectedMember.updatedAt ? new Date(selectedMember.updatedAt).toLocaleDateString() : "-"}</p></div></div>
-
-                                </div>
-                            </div>
-
-                            <div className="modal-footer">
-                                <button onClick={closeModal} className="btn btn-secondary">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </>
-
-            )}
         </div>
     );
 };
