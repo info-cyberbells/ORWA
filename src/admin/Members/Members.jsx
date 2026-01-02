@@ -120,51 +120,6 @@ const Members = () => {
                     <p className="text-muted">Manage and view all society members</p>
                 </div>
 
-                {/* Status Cards */}
-                <div className="row mb-4 g-3">
-                    <div className="col-md-4">
-                        <div className="status-card status-card-active">
-                            <div className="status-card-content">
-                                <div className="status-info">
-                                    <p className="status-label">Active</p>
-                                    <h2 className="status-count">
-                                        {statusCounts?.find(s => s._id === "active")?.count || 0}
-                                    </h2>
-                                </div>
-                                <UserCheck className="status-icon" size={28} strokeWidth={2} />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="col-md-4">
-                        <div className="status-card status-card-pending">
-                            <div className="status-card-content">
-                                <div className="status-info">
-                                    <p className="status-label">Pending</p>
-                                    <h2 className="status-count">
-                                        {statusCounts?.find(s => s._id === "pending")?.count || 0}
-                                    </h2>
-                                </div>
-                                <Clock className="status-icon" size={28} strokeWidth={2} />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="col-md-4">
-                        <div className="status-card status-card-inactive">
-                            <div className="status-card-content">
-                                <div className="status-info">
-                                    <p className="status-label">Inactive</p>
-                                    <h2 className="status-count">
-                                        {statusCounts?.find(s => s._id === "inactive")?.count || 0}
-                                    </h2>
-                                </div>
-                                <UserX className="status-icon" size={28} strokeWidth={2} />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 {/* Members Table */}
                 <div className="card">
                     <div className="table-responsive">
@@ -328,7 +283,7 @@ const Members = () => {
                                         type="text"
                                         className="form-control"
                                         value={SelectedMember.firstName || ""}
-                                          disabled={!isEditMode} 
+                                        disabled={!isEditMode}
                                         onChange={(e) => setSelectedMember({ ...SelectedMember, firstName: e.target.value })}
                                     />
                                 </div>
@@ -339,7 +294,7 @@ const Members = () => {
                                         type="text"
                                         className="form-control"
                                         value={SelectedMember.middleName || ""}
-                                          disabled={!isEditMode} 
+                                        disabled={!isEditMode}
                                         onChange={(e) => setSelectedMember({ ...SelectedMember, middleName: e.target.value })}
                                     />
                                 </div>
@@ -350,7 +305,7 @@ const Members = () => {
                                         type="text"
                                         className="form-control"
                                         value={SelectedMember.lastName || ""}
-                                          disabled={!isEditMode} 
+                                        disabled={!isEditMode}
                                         onChange={(e) => setSelectedMember({ ...SelectedMember, lastName: e.target.value })}
                                     />
                                 </div>
@@ -361,7 +316,7 @@ const Members = () => {
                                         type="text"
                                         className="form-control"
                                         value={SelectedMember.name || ""}
-                                          disabled={!isEditMode} 
+                                        disabled={!isEditMode}
                                         onChange={(e) => setSelectedMember({ ...SelectedMember, name: e.target.value })}
                                     />
                                 </div>
@@ -371,7 +326,7 @@ const Members = () => {
                                     <input
                                         type="date"
                                         className="form-control"
-                                          disabled={!isEditMode} 
+                                        disabled={!isEditMode}
                                         value={SelectedMember.dateOfBirth ? SelectedMember.dateOfBirth.split("T")[0] : ""}
                                         onChange={(e) => setSelectedMember({ ...SelectedMember, dateOfBirth: e.target.value })}
                                     />
@@ -383,7 +338,7 @@ const Members = () => {
                                         type="email"
                                         className="form-control"
                                         value={SelectedMember.email || ""}
-                                          disabled={!isEditMode} 
+                                        disabled={!isEditMode}
                                         onChange={(e) => setSelectedMember({ ...SelectedMember, email: e.target.value })}
                                     />
                                 </div>
@@ -394,7 +349,7 @@ const Members = () => {
                                         type="text"
                                         className="form-control"
                                         value={SelectedMember.phone || ""}
-                                          disabled={!isEditMode} 
+                                        disabled={!isEditMode}
                                         onChange={(e) => setSelectedMember({ ...SelectedMember, phone: e.target.value })}
                                     />
                                 </div>
@@ -405,7 +360,7 @@ const Members = () => {
                                         type="text"
                                         className="form-control"
                                         value={SelectedMember.occupation || ""}
-                                          disabled={!isEditMode} 
+                                        disabled={!isEditMode}
                                         onChange={(e) => setSelectedMember({ ...SelectedMember, occupation: e.target.value })}
                                     />
                                 </div>
@@ -415,7 +370,7 @@ const Members = () => {
                                         type="checkbox"
                                         className="form-check-input"
                                         checked={SelectedMember.livingHere}
-                                          disabled={!isEditMode} 
+                                        disabled={!isEditMode}
                                         onChange={(e) => setSelectedMember({ ...SelectedMember, livingHere: e.target.checked })}
                                     />
                                     <label className="form-check-label">Living Here</label>
@@ -426,7 +381,7 @@ const Members = () => {
                                         type="checkbox"
                                         className="form-check-input"
                                         checked={SelectedMember.traveling}
-                                          disabled={!isEditMode} 
+                                        disabled={!isEditMode}
                                         onChange={(e) => setSelectedMember({ ...SelectedMember, traveling: e.target.checked })}
                                     />
                                     <label className="form-check-label">Traveling</label>
@@ -438,7 +393,7 @@ const Members = () => {
                                     <select
                                         className="form-select"
                                         value={membershipStatus}
-                                          disabled={!isEditMode} 
+                                        disabled={!isEditMode}
                                         onChange={(e) => setMembershipStatus(e.target.value)}
                                     >
                                         <option value="active">Active</option>
@@ -453,7 +408,7 @@ const Members = () => {
                                         type="text"
                                         className="form-control"
                                         value={SelectedMember.societyId || ""}
-                                          disabled={!isEditMode} 
+                                        disabled={!isEditMode}
                                         onChange={(e) => setSelectedMember({ ...SelectedMember, societyId: e.target.value })}
                                     />
                                 </div>
@@ -461,7 +416,7 @@ const Members = () => {
                         </div>
 
                         <div className="modal-footer">
-                            {isEditMode && (<button onClick={handleUpdate} className="btn btn-primary">Update</button> )}
+                            {isEditMode && (<button onClick={handleUpdate} className="btn btn-primary">Update</button>)}
                             <button onClick={closeModal} className="btn btn-secondary">Close</button>
                         </div>
                     </div>

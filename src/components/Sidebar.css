@@ -42,6 +42,7 @@
 .sidebar-link:hover {
     background: rgba(56, 189, 248, 0.15);
     color: #38f8ae !important;
+    text-decoration: none !important;
 }
 
 /* Active */
