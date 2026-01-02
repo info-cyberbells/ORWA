@@ -1,9 +1,9 @@
-
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMembers, fetchMemberById, resetMembersState } from "../../features/membersSlice";
 import { Eye, UserCheck, UserX, Clock, X, Edit, Trash2 } from "lucide-react";
 import { updateMember } from "../../features/membersSlice";
+import { toast } from "react-toastify";
 
 
 import "./Members.css";
@@ -13,6 +13,8 @@ const Members = () => {
     const [membershipStatus, setMembershipStatus] = useState("");
     const [selectedIds, setSelectedIds] = useState([]);
     const [SelectedMember, setSelectedMember] = useState(null);
+    const [isEditMode, setIsEditMode] = useState(false);
+
 
 
 
@@ -25,7 +27,7 @@ const Members = () => {
     useEffect(() => {
         dispatch(fetchMembers({ page: currentPage, limit: 10 }));
     }, [dispatch, currentPage]);
-    
+
     useEffect(() => {
         if (selectedMember) {
             setSelectedMember(selectedMember);
@@ -65,12 +67,12 @@ const Members = () => {
         dispatch(updateMember({ id: SelectedMember._id, updatedData }))
             .unwrap()
             .then(() => {
-                alert("Member updated successfully!");
+                toast.success("Member updated successfully");
                 closeModal();
                 dispatch(fetchMembers({ page: currentPage, limit: 10 })); // refresh table
             })
             .catch((err) => {
-                alert("Update failed: " + err);
+                toast.error(err || "Update failed");
             });
     };
 
@@ -86,10 +88,10 @@ const Members = () => {
     };
 
 
-const closeModal = () => {
-  setSelectedMember(null);
-  dispatch(resetMembersState());
-};
+    const closeModal = () => {
+        setSelectedMember(null);
+        dispatch(resetMembersState());
+    };
 
 
     const getRowNumber = (index) => {
@@ -225,7 +227,10 @@ const closeModal = () => {
                                             <div className="d-inline-flex align-items-center gap-2 justify-content-center">
 
                                                 <button
-                                                    onClick={() => handleViewDetails(member)}
+                                                    onClick={() => {
+                                                        setIsEditMode(false);
+                                                        handleViewDetails(member)
+                                                    }}
                                                     className="btn btn-outline-success btn-sm d-flex align-items-center gap-1"
                                                 >
                                                     <Eye size={16} strokeWidth={2} />
@@ -234,7 +239,10 @@ const closeModal = () => {
 
                                                 <button
                                                     className="btn btn-outline-primary btn-sm d-flex align-items-center gap-1"
-                                                    onClick={() => handleViewDetails(member)}
+                                                    onClick={() => {
+                                                        setIsEditMode(true);
+                                                        handleViewDetails(member)
+                                                    }}
 
                                                 >
                                                     <Edit size={16} strokeWidth={2} />
@@ -282,171 +290,183 @@ const closeModal = () => {
             </div>
 
             {/* Modal */}
-          {SelectedMember && (
-  <div
-    className="modal-wrapper"
-    style={{
-      position: "fixed",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-      zIndex: 1050,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-    }}
-    onClick={closeModal}
-  >
-    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-      <div
-        className="modal-header"
-        style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
-      >
-        <h2>Member Details</h2>
-        <button onClick={closeModal} className="btn-close">
-          <X size={24} />
-        </button>
-      </div>
+            {SelectedMember && (
+                <div
+                    className="modal-wrapper"
+                    style={{
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                        zIndex: 1050,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                    }}
+                    onClick={closeModal}
+                >
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <div
+                            className="modal-header"
+                            style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
+                        >
+                            <h2>Member Details</h2>
+                            <button onClick={closeModal} className="btn-close">
+                                <X size={24} />
+                            </button>
+                        </div>
 
-      <div className="modal-body">
-        <div className="row g-3">
-          {/* Personal Info */}
-          <div className="col-12"><h6 className="section-title">Personal Information</h6></div>
+                        <div className="modal-body">
+                            <div className="row g-3">
+                                {/* Personal Info */}
+                                <div className="col-12"><h6 className="section-title">Personal Information</h6></div>
 
-          <div className="col-12">
-            <label>First Name</label>
-            <input
-              type="text"
-              className="form-control"
-              value={SelectedMember.firstName || ""}
-              onChange={(e) => setSelectedMember({ ...SelectedMember, firstName: e.target.value })}
-            />
-          </div>
+                                <div className="col-12">
+                                    <label>First Name</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={SelectedMember.firstName || ""}
+                                          disabled={!isEditMode} 
+                                        onChange={(e) => setSelectedMember({ ...SelectedMember, firstName: e.target.value })}
+                                    />
+                                </div>
 
-          <div className="col-12">
-            <label>Middle Name</label>
-            <input
-              type="text"
-              className="form-control"
-              value={SelectedMember.middleName || ""}
-              onChange={(e) => setSelectedMember({ ...SelectedMember, middleName: e.target.value })}
-            />
-          </div>
+                                <div className="col-12">
+                                    <label>Middle Name</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={SelectedMember.middleName || ""}
+                                          disabled={!isEditMode} 
+                                        onChange={(e) => setSelectedMember({ ...SelectedMember, middleName: e.target.value })}
+                                    />
+                                </div>
 
-          <div className="col-12">
-            <label>Last Name</label>
-            <input
-              type="text"
-              className="form-control"
-              value={SelectedMember.lastName || ""}
-              onChange={(e) => setSelectedMember({ ...SelectedMember, lastName: e.target.value })}
-            />
-          </div>
+                                <div className="col-12">
+                                    <label>Last Name</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={SelectedMember.lastName || ""}
+                                          disabled={!isEditMode} 
+                                        onChange={(e) => setSelectedMember({ ...SelectedMember, lastName: e.target.value })}
+                                    />
+                                </div>
 
-          <div className="col-12">
-            <label>Full Name</label>
-            <input
-              type="text"
-              className="form-control"
-              value={SelectedMember.name || ""}
-              onChange={(e) => setSelectedMember({ ...SelectedMember, name: e.target.value })}
-            />
-          </div>
+                                <div className="col-12">
+                                    <label>Full Name</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={SelectedMember.name || ""}
+                                          disabled={!isEditMode} 
+                                        onChange={(e) => setSelectedMember({ ...SelectedMember, name: e.target.value })}
+                                    />
+                                </div>
 
-          <div className="col-12">
-            <label>Date of Birth</label>
-            <input
-              type="date"
-              className="form-control"
-              value={SelectedMember.dateOfBirth ? SelectedMember.dateOfBirth.split("T")[0] : ""}
-              onChange={(e) => setSelectedMember({ ...SelectedMember, dateOfBirth: e.target.value })}
-            />
-          </div>
+                                <div className="col-12">
+                                    <label>Date of Birth</label>
+                                    <input
+                                        type="date"
+                                        className="form-control"
+                                          disabled={!isEditMode} 
+                                        value={SelectedMember.dateOfBirth ? SelectedMember.dateOfBirth.split("T")[0] : ""}
+                                        onChange={(e) => setSelectedMember({ ...SelectedMember, dateOfBirth: e.target.value })}
+                                    />
+                                </div>
 
-          <div className="col-12">
-            <label>Email</label>
-            <input
-              type="email"
-              className="form-control"
-              value={SelectedMember.email || ""}
-              onChange={(e) => setSelectedMember({ ...SelectedMember, email: e.target.value })}
-            />
-          </div>
+                                <div className="col-12">
+                                    <label>Email</label>
+                                    <input
+                                        type="email"
+                                        className="form-control"
+                                        value={SelectedMember.email || ""}
+                                          disabled={!isEditMode} 
+                                        onChange={(e) => setSelectedMember({ ...SelectedMember, email: e.target.value })}
+                                    />
+                                </div>
 
-          <div className="col-12">
-            <label>Phone</label>
-            <input
-              type="text"
-              className="form-control"
-              value={SelectedMember.phone || ""}
-              onChange={(e) => setSelectedMember({ ...SelectedMember, phone: e.target.value })}
-            />
-          </div>
+                                <div className="col-12">
+                                    <label>Phone</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={SelectedMember.phone || ""}
+                                          disabled={!isEditMode} 
+                                        onChange={(e) => setSelectedMember({ ...SelectedMember, phone: e.target.value })}
+                                    />
+                                </div>
 
-          <div className="col-12">
-            <label>Occupation</label>
-            <input
-              type="text"
-              className="form-control"
-              value={SelectedMember.occupation || ""}
-              onChange={(e) => setSelectedMember({ ...SelectedMember, occupation: e.target.value })}
-            />
-          </div>
+                                <div className="col-12">
+                                    <label>Occupation</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={SelectedMember.occupation || ""}
+                                          disabled={!isEditMode} 
+                                        onChange={(e) => setSelectedMember({ ...SelectedMember, occupation: e.target.value })}
+                                    />
+                                </div>
 
-          <div className="col-6 form-check">
-            <input
-              type="checkbox"
-              className="form-check-input"
-              checked={SelectedMember.livingHere}
-              onChange={(e) => setSelectedMember({ ...SelectedMember, livingHere: e.target.checked })}
-            />
-            <label className="form-check-label">Living Here</label>
-          </div>
+                                <div className="col-6 form-check">
+                                    <input
+                                        type="checkbox"
+                                        className="form-check-input"
+                                        checked={SelectedMember.livingHere}
+                                          disabled={!isEditMode} 
+                                        onChange={(e) => setSelectedMember({ ...SelectedMember, livingHere: e.target.checked })}
+                                    />
+                                    <label className="form-check-label">Living Here</label>
+                                </div>
 
-          <div className="col-6 form-check">
-            <input
-              type="checkbox"
-              className="form-check-input"
-              checked={SelectedMember.traveling}
-              onChange={(e) => setSelectedMember({ ...SelectedMember, traveling: e.target.checked })}
-            />
-            <label className="form-check-label">Traveling</label>
-          </div>
+                                <div className="col-6 form-check">
+                                    <input
+                                        type="checkbox"
+                                        className="form-check-input"
+                                        checked={SelectedMember.traveling}
+                                          disabled={!isEditMode} 
+                                        onChange={(e) => setSelectedMember({ ...SelectedMember, traveling: e.target.checked })}
+                                    />
+                                    <label className="form-check-label">Traveling</label>
+                                </div>
 
-          {/* Membership Status */}
-          <div className="col-6">
-            <label>Membership Status</label>
-            <select
-              className="form-select"
-              value={membershipStatus}
-              onChange={(e) => setMembershipStatus(e.target.value)}
-            >
-              <option value="active">Active</option>
-              <option value="pending">Pending</option>
-            </select>
-          </div>
+                                {/* Membership Status */}
+                                <div className="col-6">
+                                    <label>Membership Status</label>
+                                    <select
+                                        className="form-select"
+                                        value={membershipStatus}
+                                          disabled={!isEditMode} 
+                                        onChange={(e) => setMembershipStatus(e.target.value)}
+                                    >
+                                        <option value="active">Active</option>
+                                        <option value="pending">Pending</option>
+                                    </select>
+                                </div>
 
-          {/* Society ID */}
-          <div className="col-12">
-            <label>Society ID</label>
-            <input
-              type="text"
-              className="form-control"
-              value={SelectedMember.societyId || ""}
-              onChange={(e) => setSelectedMember({ ...SelectedMember, societyId: e.target.value })}
-            />
-          </div>
-        </div>
-      </div>
+                                {/* Society ID */}
+                                <div className="col-12">
+                                    <label>Society ID</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={SelectedMember.societyId || ""}
+                                          disabled={!isEditMode} 
+                                        onChange={(e) => setSelectedMember({ ...SelectedMember, societyId: e.target.value })}
+                                    />
+                                </div>
+                            </div>
+                        </div>
 
-      <div className="modal-footer">
-        <button onClick={handleUpdate} className="btn btn-primary">Update</button>
-        <button onClick={closeModal} className="btn btn-secondary">Close</button>
-      </div>
-    </div>
-  </div>
-)}
+                        <div className="modal-footer">
+                            {isEditMode && (<button onClick={handleUpdate} className="btn btn-primary">Update</button> )}
+                            <button onClick={closeModal} className="btn btn-secondary">Close</button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
 
         </div>

@@ -62,6 +62,7 @@ const membersSlice = createSlice({
   initialState: {
     loading: false,
     success: false,
+    selectedMember: null,
     error: null,
     members: [],
     page: 1,
@@ -129,12 +130,20 @@ const membersSlice = createSlice({
       .addCase(updateMember.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
-        const index = state.members.findIndex(m => m.id === action.payload.data.residential.id);
+
+        const updatedMember = action.payload.data;
+
+        const index = state.members.findIndex(
+          m => m._id === updatedMember._id
+        );
+
         if (index !== -1) {
-          state.members[index] = action.payload.data.residential;
+          state.members[index] = updatedMember;
         }
-        state.selectedMember = action.payload.data.residential;
+
+        state.selectedMember = updatedMember;
       })
+
       .addCase(updateMember.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
