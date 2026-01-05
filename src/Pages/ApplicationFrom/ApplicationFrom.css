@@ -55,3 +55,38 @@ label {
 .btn-submit:hover {
   background: #155a4a;
 }
+.signature-wrapper {
+  max-width: 420px;
+}
+
+.signature-label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.signature-box {
+  border: 2px solid #000;
+  border-radius: 6px;
+  padding: 4px;
+  background: #fff;
+}
+
+.sigCanvas {
+  width: 100%;
+  height: auto;
+  cursor: crosshair;
+}
+
+.signature-actions {
+  margin-top: 10px;
+}
+
+.signature-preview {
+  margin-top: 10px;
+}
+
+.signature-preview img {
+  max-width: 100%;
+  border-bottom: 2px solid #000;
+}

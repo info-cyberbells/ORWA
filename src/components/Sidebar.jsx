@@ -37,6 +37,12 @@ const Sidebar = () => {
           </NavLink>
         </li>
         <li>
+          <NavLink to="/admin-residential" className="sidebar-link">
+            <i className="bi bi-people"></i>
+            <span>Residential</span>
+          </NavLink>
+        </li>
+        <li>
           <NavLink to="/admin-contactlist" className="sidebar-link">
             <i className="bi bi-people"></i>
             <span>Contact-List</span>

@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { createResidentialApplication, getResidentialMembers, getResidentialMemberById, updateResidentialMember } from "../auth/authServices";
+import { createResidentialApplication, getResidentialMembers,
+getMembers, getResidentialMemberById,verifyResidentialMember , updateResidentialMember } from "../auth/authServices";
 
+// submitMemberApplication
 export const submitMemberApplication = createAsyncThunk(
   "members/submit",
   async (formData, { rejectWithValue }) => {
@@ -13,7 +15,7 @@ export const submitMemberApplication = createAsyncThunk(
     }
   }
 );
-
+// fetchMembers
 export const fetchMembers = createAsyncThunk(
   "members/fetch",
   async ({ page, limit }, { rejectWithValue }) => {
@@ -27,6 +29,20 @@ export const fetchMembers = createAsyncThunk(
   }
 );
 
+// fetchResidentialMembers
+export const fetchResidentialMembers = createAsyncThunk(
+  "members/fetchmembers",
+  async ({ page, limit }, { rejectWithValue }) => {
+    try {
+      return await getMembers({ page, limit });
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch members"
+      );
+    }
+  }
+);
+// fetchMemberById
 export const fetchMemberById = createAsyncThunk(
   "members/fetchById",
   async (id, { rejectWithValue }) => {
@@ -40,7 +56,20 @@ export const fetchMemberById = createAsyncThunk(
   }
 );
 
-
+export const addResidential = createAsyncThunk(
+  "members/addResidential",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const res = await axios.post(
+        USER_ENDPOINTS.CREATE_RESIDENTIAL,
+        payload
+      );
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || "Create failed");
+    }
+  }
+)
 
 
 
@@ -57,6 +86,48 @@ export const updateMember = createAsyncThunk(
     }
   }
 );
+
+
+
+// verify member thunk
+export const verifyMember = createAsyncThunk(
+  "members/verify",
+  async ({ memberId, status }, { rejectWithValue }) => {
+    try {
+      return await verifyResidentialMember({ memberId, status });
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to verify member"
+      );
+    }
+  }
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const membersSlice = createSlice({
   name: "members",
   initialState: {
@@ -80,6 +151,7 @@ const membersSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+    // submitMemberApplication cases
       .addCase(submitMemberApplication.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -92,7 +164,9 @@ const membersSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+  // submitMemberApplication end cases
 
+// fetchMembers case
       .addCase(fetchMembers.pending, (state) => {
         state.loading = true;
       })
@@ -108,8 +182,26 @@ const membersSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+// fetchMembers case end
 
-      //get single member
+// get  Residential member cases
+   .addCase(fetchResidentialMembers.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchResidentialMembers.fulfilled, (state, action) => {
+        state.loading = false;
+        state.members = action.payload.data;
+        state.page = action.payload.page;
+        state.totalPages = action.payload.totalPages;
+        state.total = action.payload.total;
+        state.statusCounts = action.payload.statusCounts;
+      })
+      .addCase(fetchResidentialMembers.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      //get single member ById cases
       .addCase(fetchMemberById.pending, (state) => {
         state.loading = true;
       })
@@ -121,8 +213,39 @@ const membersSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+      //get single member ById cases end
+    
 
+      // verify member cases
+.addCase(verifyMember.pending, (state) => {
+  state.loading = true;
+  state.error = null;
+})
+.addCase(verifyMember.fulfilled, (state, action) => {
+  state.loading = false;
+  state.success = true;
 
+  const verifiedMember = action.payload.data;
+
+  // update list if exists
+  const index = state.members.findIndex(
+    m => m._id === verifiedMember._id
+  );
+
+  if (index !== -1) {
+    state.members[index] = verifiedMember;
+  }
+
+  // update selected member
+  state.selectedMember = verifiedMember;
+})
+.addCase(verifyMember.rejected, (state, action) => {
+  state.loading = false;
+  state.error = action.payload;
+})
+      // verify member cases end
+
+// updateMember case
       .addCase(updateMember.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -147,7 +270,8 @@ const membersSlice = createSlice({
       .addCase(updateMember.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      });
+      })
+      // updateMember cases end
 
   },
 });

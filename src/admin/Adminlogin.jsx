@@ -60,7 +60,7 @@ const Login = () => {
               <div className="card-body p-4">
 
                 <div className="text-center mb-4">
-                  <h3 className="fw-bold">Welcome To MemberShip PRO</h3>
+                  <h3 className="fw-bold">Welcome To ORWA Admin</h3>
                   <p className="text-muted mb-0">Login to your account</p>
                 </div>
 

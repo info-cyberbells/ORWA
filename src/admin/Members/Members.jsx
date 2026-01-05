@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMembers, fetchMemberById, resetMembersState } from "../../features/membersSlice";
 import { Eye, UserCheck, UserX, Clock, X, Edit, Trash2 } from "lucide-react";
-import { updateMember } from "../../features/membersSlice";
+// import { updateMember } from "../../features/membersSlice";
 import { toast } from "react-toastify";
+import { verifyMember } from "../../features/membersSlice";
+
 
 
 import "./Members.css";
@@ -55,27 +57,50 @@ const Members = () => {
             prev.length === members.length ? [] : members.map((m) => m._id)
         );
     };
-    const handleUpdate = () => {
+    // const handleUpdate = () => {
+    //     if (!SelectedMember) return;
+
+    //     // Prepare payload
+    //     const updatedData = {
+    //         ...SelectedMember,
+    //         membershipStatus,
+    //     };
+
+    //     dispatch(updateMember({ id: SelectedMember._id, updatedData }))
+    //         .unwrap()
+    //         .then(() => {
+    //             toast.success("Member updated successfully");
+    //             closeModal();
+    //             dispatch(fetchMembers({ page: currentPage, limit: 10 })); // refresh table
+    //         })
+    //         .catch((err) => {
+    //             toast.error(err || "Update failed");
+    //         });
+    // };
+
+    const handleVerify = (status) => {
         if (!SelectedMember) return;
 
-        // Prepare payload
-        const updatedData = {
-            ...SelectedMember,
-            membershipStatus,
-        };
-
-        dispatch(updateMember({ id: SelectedMember._id, updatedData }))
+        dispatch(
+            verifyMember({
+                memberId: SelectedMember._id,
+                status,
+            })
+        )
             .unwrap()
             .then(() => {
-                toast.success("Member updated successfully");
+                toast.success(
+                    status
+                        ? "Member verified successfully "
+                        : "Member rejected "
+                );
                 closeModal();
-                dispatch(fetchMembers({ page: currentPage, limit: 10 })); // refresh table
+                dispatch(fetchMembers({ page: currentPage, limit: 10 }));
             })
             .catch((err) => {
-                toast.error(err || "Update failed");
+                toast.error(err || "Verification failed");
             });
     };
-
 
 
     const getStatusBadge = (status) => {
@@ -181,7 +206,7 @@ const Members = () => {
                                         <td style={{ textAlign: "center" }}>
                                             <div className="d-inline-flex align-items-center gap-2 justify-content-center">
 
-                                                <button
+                                                {/* <button
                                                     onClick={() => {
                                                         setIsEditMode(false);
                                                         handleViewDetails(member)
@@ -190,7 +215,7 @@ const Members = () => {
                                                 >
                                                     <Eye size={16} strokeWidth={2} />
                                                     View
-                                                </button>
+                                                </button> */}
 
                                                 <button
                                                     className="btn btn-outline-primary btn-sm d-flex align-items-center gap-1"
@@ -258,6 +283,9 @@ const Members = () => {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
+                        backdropFilter: "blur(5px)",
+                        backgroundColor: "rgba(0,0,0,0.2)", // IMPORTANT
+
                     }}
                     onClick={closeModal}
                 >
@@ -310,16 +338,6 @@ const Members = () => {
                                     />
                                 </div>
 
-                                <div className="col-12">
-                                    <label>Full Name</label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        value={SelectedMember.name || ""}
-                                        disabled={!isEditMode}
-                                        onChange={(e) => setSelectedMember({ ...SelectedMember, name: e.target.value })}
-                                    />
-                                </div>
 
                                 <div className="col-12">
                                     <label>Date of Birth</label>
@@ -365,15 +383,22 @@ const Members = () => {
                                     />
                                 </div>
 
-                                <div className="col-6 form-check">
-                                    <input
-                                        type="checkbox"
-                                        className="form-check-input"
-                                        checked={SelectedMember.livingHere}
-                                        disabled={!isEditMode}
-                                        onChange={(e) => setSelectedMember({ ...SelectedMember, livingHere: e.target.checked })}
-                                    />
-                                    <label className="form-check-label">Living Here</label>
+
+                                <div className="col-6">
+                                    <div className="form-check">
+                                        <input
+                                            type="checkbox"
+                                            className="form-check-input"
+                                            checked={SelectedMember.livingHere}
+                                            disabled={!isEditMode}
+                                            onChange={(e) =>
+                                                setSelectedMember({ ...SelectedMember, livingHere: e.target.checked })
+                                            }
+                                        />
+                                        <label className="form-check-label" htmlFor="livingHereCheckbox">
+                                            Living Here
+                                        </label>
+                                    </div>
                                 </div>
 
                                 <div className="col-6 form-check">
@@ -385,6 +410,82 @@ const Members = () => {
                                         onChange={(e) => setSelectedMember({ ...SelectedMember, traveling: e.target.checked })}
                                     />
                                     <label className="form-check-label">Traveling</label>
+                                </div>
+                                {/* Documents */}
+                                {/* Uploaded Documents */}
+                                <div className="row g-3 mt-4">
+                                    <div className="col-12">
+                                        <h6 className="section-title">Uploaded Documents</h6>
+                                    </div>
+
+                                    <div className="col-md-3">
+                                        <label>Identity Proof</label>
+                                        {SelectedMember.identityProofDocument ? (
+                                            <img
+                                                src={SelectedMember.identityProofDocument}
+                                                alt="Identity Proof"
+                                                className="img-fluid border rounded"
+                                            />
+                                        ) : (
+                                            <p>-</p>
+                                        )}
+                                    </div>
+
+                                    <div className="col-md-3">
+                                        <label>Address Proof</label>
+                                        {SelectedMember.addressProofDocument ? (
+                                            <img
+                                                src={SelectedMember.addressProofDocument}
+                                                alt="Address Proof"
+                                                className="img-fluid border rounded"
+                                            />
+                                        ) : (
+                                            <p>-</p>
+                                        )}
+                                    </div>
+
+                                    <div className="col-md-3">
+                                        <label>Ownership Proof</label>
+                                        {SelectedMember.ownershipProofDocument ? (
+                                            <img
+                                                src={SelectedMember.ownershipProofDocument}
+                                                alt="Ownership Proof"
+                                                className="img-fluid border rounded"
+                                            />
+                                        ) : (
+                                            <p>-</p>
+                                        )}
+                                    </div>
+
+                                    <div className="col-md-3">
+                                        <label>Applicant Photo</label>
+                                        {SelectedMember.applicantPhoto ? (
+                                            <img
+                                                src={SelectedMember.applicantPhoto}
+                                                alt="Applicant"
+                                                className="img-fluid border rounded"
+                                            />
+                                        ) : (
+                                            <p>-</p>
+                                        )}
+                                    </div>
+                                </div>
+                                {/* Signature */}
+                                <div className="row mt-4">
+                                    <div className="col-12">
+                                        <h6 className="section-title">Signature</h6>
+
+                                        {SelectedMember.signature ? (
+                                            <img
+                                                src={SelectedMember.signature}
+                                                alt="Member Signature"
+                                                className="img-fluid border rounded"
+                                                style={{ maxWidth: "300px", height: "auto" }}
+                                            />
+                                        ) : (
+                                            <p>-</p>
+                                        )}
+                                    </div>
                                 </div>
 
                                 {/* Membership Status */}
@@ -416,15 +517,36 @@ const Members = () => {
                         </div>
 
                         <div className="modal-footer">
-                            {isEditMode && (<button onClick={handleUpdate} className="btn btn-primary">Update</button>)}
-                            <button onClick={closeModal} className="btn btn-secondary">Close</button>
+                            {isEditMode && (
+                                <button
+                                    onClick={() => handleVerify(true)} // pass true for verify
+                                    className="btn btn-success me-2"
+                                >
+                                    Verify Member
+                                </button>
+                            )}
+
+                            {isEditMode && (
+                                <button
+                                    onClick={() => handleVerify(false)} //  pass false for reject
+                                    className="btn btn-danger me-2"
+                                >
+                                    Reject
+                                </button>
+                            )}
+
+                            {/* <button onClick={closeModal} className="btn btn-secondary">
+                                Close
+                            </button> */}
                         </div>
+
                     </div>
                 </div>
-            )}
+            )
+            }
 
 
-        </div>
+        </div >
     );
 };
 

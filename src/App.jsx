@@ -33,6 +33,7 @@ import ApplicationFrom from "./Pages/ApplicationFrom/ApplicationFrom"
 import AdminLogin from './admin/Adminlogin'
 import Dashboard from './admin/Dashboard'
 import Members from './admin/Members/Members'
+import Residential from './admin/Members/Residential'
 import ContactList from "./admin/ContactList/ContactList";
 
 function App() {
@@ -72,6 +73,7 @@ function App() {
         <Route element={<AuthLayout />}>
           <Route path="/admin-dashboard" element={<Dashboard />} />
           <Route path="/admin-members" element={<Members />} />
+          <Route path="/admin-residential" element={<Residential/>} />
           <Route path="/admin-contactList" element={<ContactList />} />
 
         </Route>

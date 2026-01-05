@@ -1,5 +1,5 @@
 import axios from "axios";
-import USER_ENDPOINTS from "./authRoutes";
+import {USER_ENDPOINTS} from "./authRoutes";
 // import { get } from "mongoose";
 
 const getAuthHeader = () => {
@@ -60,6 +60,14 @@ export const getResidentialMembers = async ({ page = 1, limit = 10 }) => {
   );
   return response.data;
 };
+// GET  members 
+export const getMembers = async ({ page = 1, limit = 10 }) => {
+  const response = await axios.get(
+    ` ${USER_ENDPOINTS.GET_MEMBERS}?page=${page}&limit=${limit}`,
+    getAuthHeader()
+  );
+  return response.data;
+};
 
 
 //  GET member by ID
@@ -70,6 +78,16 @@ export const getResidentialMemberById = async (id) => {
   );
   return response.data;
 };
+// Verify residential member
+export const verifyResidentialMember = async ({ memberId, status }) => {
+  const response = await axios.put(
+    `${USER_ENDPOINTS.VERIFY_MEMBER}/${memberId}`,
+    { status }, // true or false
+    getAuthHeader()
+  );
+  return response.data;
+};
+
 
 
 // Update residential member

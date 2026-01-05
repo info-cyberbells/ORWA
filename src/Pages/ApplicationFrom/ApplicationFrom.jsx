@@ -1,11 +1,27 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { submitMemberApplication, resetMembersState } from "../../features/membersSlice";
 import "./ApplicationFrom.css";
+import SignatureCanvas from "react-signature-canvas";
+
 
 const ApplicationForm = () => {
+  const sigCanvas = useRef(null);
+  const [signatureData, setSignatureData] = useState(null);
+
   const dispatch = useDispatch();
   const formRef = useRef(null);
+
+  const captchaRef = useRef(null);
+  if (!captchaRef.current) {
+    const operators = ["+", "-", "*"];
+    captchaRef.current = {
+      num1: Math.floor(Math.random() * 20) + 1,
+      num2: Math.floor(Math.random() * 20) + 1,
+      operator: operators[Math.floor(Math.random() * operators.length)],
+    };
+  }
+
   const { loading, success, error } = useSelector(
     (state) => state.members
   );
@@ -50,12 +66,17 @@ const ApplicationForm = () => {
     }
   }, [success, dispatch]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
     const formData = new FormData(e.target);
-    formData.append("requestSource", "web");
 
+    // Add signature image if exists
+    if (signatureData) {
+      const blob = await fetch(signatureData).then(res => res.blob());
+      formData.append("signature", blob, "signature.png");
+    }
+
+    formData.append("requestSource", "web");
     dispatch(submitMemberApplication(formData));
   };
 
@@ -380,7 +401,7 @@ const ApplicationForm = () => {
                 <option value="Registry Documents">Registry Documents</option>
                 <option value="Lease Agreement">Lease Agreement</option>
                 <option value="Other">Other</option>
-                
+
 
               </select>
             </div>
@@ -390,15 +411,61 @@ const ApplicationForm = () => {
           <div className="mb-3">
             <label>Custom Captcha *</label>
             <div className="d-flex align-items-center gap-2">
-              <span className="fw-semibold">6 * 14 =</span>
+              <span className="fw-semibold">
+                {captchaRef.current.num1} {captchaRef.current.operator} {captchaRef.current.num2} =
+              </span>
               <input name="captcha" type="text" className="form-control w-25" required />
             </div>
           </div>
 
           {/* Signature */}
-          <div className="mb-4">
-            <label>Signature *</label>
-            <textarea name="signature" className="form-control" rows="3" required></textarea>
+          <div className="mb-4 signature-wrapper">
+            <label className="signature-label">Signature *</label>
+
+            <div className="signature-box">
+              <SignatureCanvas
+                ref={sigCanvas}
+                penColor="black"
+                canvasProps={{
+                  width: 400,
+                  height: 150,
+                  className: "sigCanvas"
+                }}
+              />
+            </div>
+
+            {/* Buttons */}
+            <div className="signature-actions">
+              <button
+                type="button"
+                className="btn btn-sm btn-secondary"
+                onClick={() => {
+                  const dataURL = sigCanvas.current.toDataURL();
+                  setSignatureData(dataURL);
+                }}
+              >
+                Save
+              </button>
+
+              <button
+                type="button"
+                className="btn btn-sm btn-danger ms-2"
+                onClick={() => {
+                  sigCanvas.current.clear();
+                  setSignatureData(null);
+                }}
+              >
+                Clear
+              </button>
+            </div>
+
+            {/* Preview */}
+            {signatureData && (
+              <div className="signature-preview">
+                <p className="fw-semibold mb-1">Preview:</p>
+                <img src={signatureData} alt="Signature Preview" />
+              </div>
+            )}
           </div>
 
           {/* Submit */}
