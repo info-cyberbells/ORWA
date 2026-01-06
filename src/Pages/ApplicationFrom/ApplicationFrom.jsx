@@ -8,6 +8,8 @@ import SignatureCanvas from "react-signature-canvas";
 const ApplicationForm = () => {
   const sigCanvas = useRef(null);
   const [signatureData, setSignatureData] = useState(null);
+  const captchaInputRef = useRef(null);
+  const [captchaError, setCaptchaError] = useState("");
 
   const dispatch = useDispatch();
   const formRef = useRef(null);
@@ -68,17 +70,43 @@ const ApplicationForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
 
-    // Add signature image if exists
-    if (signatureData) {
-      const blob = await fetch(signatureData).then(res => res.blob());
-      formData.append("signature", blob, "signature.png");
+    // Captcha Validation
+    const { num1, num2, operator } = captchaRef.current;
+    let correctAnswer = 0;
+
+    if (operator === "+") correctAnswer = num1 + num2;
+    if (operator === "-") correctAnswer = num1 - num2;
+    if (operator === "*") correctAnswer = num1 * num2;
+
+    const userAnswer = Number(captchaInputRef.current.value);
+
+    if (userAnswer !== correctAnswer) {
+      setCaptchaError("Captcha wrong");
+      captchaInputRef.current.value = "";
+      return;     //    if captcha wrong stop it not go to next step fromm does not submit
     }
 
-    formData.append("requestSource", "web");
+    setCaptchaError("");  //correctAnswer then working
+
+
+    if (!signatureData) {
+      alert("Please do signature first");
+      return;
+    }
+
+    const formData = new FormData(e.target);
+
+    const blob = await fetch(signatureData).then(res => res.blob());
+    formData.append("signature", blob, "signature.png");
+
     dispatch(submitMemberApplication(formData));
-  };
+  //  clear data after from submit
+    sigCanvas.current.clear();
+    setSignatureData(null);
+    captchaInputRef.current.value = "";
+    e.target.reset();
+  };  
 
 
 
@@ -408,15 +436,28 @@ const ApplicationForm = () => {
           </div>
 
           {/* Captcha */}
+          {/* Captcha */}
           <div className="mb-3">
             <label>Custom Captcha *</label>
             <div className="d-flex align-items-center gap-2">
               <span className="fw-semibold">
                 {captchaRef.current.num1} {captchaRef.current.operator} {captchaRef.current.num2} =
               </span>
-              <input name="captcha" type="text" className="form-control w-25" required />
+
+              <input
+                ref={captchaInputRef}
+                name="captcha"
+                type="text"
+                className="form-control w-25"
+                required
+              />
             </div>
+
+            {captchaError && (
+              <small className="text-danger">{captchaError}</small>
+            )}
           </div>
+
 
           {/* Signature */}
           <div className="mb-4 signature-wrapper">
@@ -426,26 +467,32 @@ const ApplicationForm = () => {
               <SignatureCanvas
                 ref={sigCanvas}
                 penColor="black"
+                onEnd={() => {
+                  const dataURL = sigCanvas.current.toDataURL();
+                  setSignatureData(dataURL);
+                }}
                 canvasProps={{
                   width: 400,
                   height: 150,
                   className: "sigCanvas"
                 }}
               />
+
+
             </div>
 
             {/* Buttons */}
             <div className="signature-actions">
-              <button
+              {/* <button
                 type="button"
                 className="btn btn-sm btn-secondary"
                 onClick={() => {
                   const dataURL = sigCanvas.current.toDataURL();
                   setSignatureData(dataURL);
-                }}
+                }}  
               >
                 Save
-              </button>
+              </button> */}
 
               <button
                 type="button"
