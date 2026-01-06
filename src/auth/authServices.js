@@ -46,8 +46,11 @@ export const ContactUsService = async (contactData) => {
 }
 
 
-export const getAllContactsService = async () => {
-  const response = await axios.get(USER_ENDPOINTS.GET_CONTACT_LIST, getAuthHeader());
+export const getAllContactsService = async ({ page = 1, limit = 10 }) => {
+  const response = await axios.get(
+    `${USER_ENDPOINTS.GET_CONTACT_LIST}?status=new&page=${page}&limit=${limit}`,
+    getAuthHeader()
+  );
   return response.data;
 };
 
@@ -104,6 +107,24 @@ export const updateResidentialMember = async (id, updatedData) => {
   );
   return response.data;
 };
+// delte getResidentialMember 
+export const deleteResidentialMember = async (id) => {
+  const response = await axios.delete(
+    `${USER_ENDPOINTS.DELETE_RESIDENTIALS}/${id}`,
+    {
+      ...getAuthHeader(),
+      headers: {
+        ...getAuthHeader().headers,
+      },
+    }
+  );
+
+  return response.data;
+};
+
+
+
+
 
 
 

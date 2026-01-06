@@ -1,27 +1,27 @@
-import { createAsyncThunk, createSlice} from "@reduxjs/toolkit"
-import {ContactUsService,getAllContactsService}  from "../auth/authServices"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { ContactUsService, getAllContactsService } from "../auth/authServices"
 
 
 
 export const contactus = createAsyncThunk(
-    "api/Contact-us",
-    async(contactData,thunkAPI)=>{
-        try {
-           return await ContactUsService(contactData);
-         
-        } catch (error) {
-          return thunkAPI.rejectWithValue(
-            error.response?.data?.message ||"message failed"
-          );
-        }
+  "api/Contact-us",
+  async (contactData, thunkAPI) => {
+    try {
+      return await ContactUsService(contactData);
+
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || "message failed"
+      );
     }
+  }
 );
 // getAllContacts
 export const getAllContacts = createAsyncThunk(
   "contact/getAll",
-  async (contactlistData, thunkAPI) => {
+  async ({ page, limit }, thunkAPI) => {
     try {
-      return await getAllContactsService(contactlistData);
+      return await getAllContactsService({ page, limit });
     } catch (error) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || "Failed to fetch contacts"
@@ -31,35 +31,38 @@ export const getAllContacts = createAsyncThunk(
 );
 
 
-const contactSlice=createSlice({
-   name: "contact",
+const contactSlice = createSlice({
+  name: "contact",
   initialState: {
     loading: false,
     success: false,
     error: null,
-    data:null,
-    contacts:[],
+    data: null,
+    contacts: [],
+    page: 1,
+    totalPages: 1,
+    total: 0,
   },
 
-  reducers:{
-     resetContactState:(state)=>{
-            state.loading=false;
-            state.error=null;
-            state.success=false
-        },
+  reducers: {
+    resetContactState: (state) => {
+      state.loading = false;
+      state.error = null;
+      state.success = false
+    },
 
   },
 
-  extraReducers:(builder)=>{
+  extraReducers: (builder) => {
     builder
-// Pendingcase
+      // Pendingcase
 
-  .addCase(contactus.pending, (state) => {
+      .addCase(contactus.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-// fulfilled case
-           .addCase(contactus.fulfilled, (state, action) => {
+      // fulfilled case
+      .addCase(contactus.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
         state.data = action.payload;
@@ -67,28 +70,33 @@ const contactSlice=createSlice({
 
 
 
-    //   rejectedcase
- .addCase(contactus.rejected, (state, action) => {
+      //   rejectedcase
+      .addCase(contactus.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
 
-// contactus List
-// pending case
-         .addCase(getAllContacts.pending, (state) => {
+      // contactus List
+      // pending case
+      .addCase(getAllContacts.pending, (state) => {
         state.loading = true;
       })
 
 
-// fulfilled case
+      // fulfilled case
 
-     .addCase(getAllContacts.fulfilled, (state, action) => {
+      .addCase(getAllContacts.fulfilled, (state, action) => {
         state.loading = false;
         state.contacts = action.payload.data;
+        state.page = action.payload.page;
+        state.totalPages = action.payload.totalPages;
+        state.total = action.payload.total;
       })
 
-// rejected case
-   .addCase(getAllContacts.rejected, (state, action) => {
+
+
+      // rejected case
+      .addCase(getAllContacts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
@@ -96,7 +104,7 @@ const contactSlice=createSlice({
 
 
   },
-  
+
 })
 export const { resetContactState } = contactSlice.actions;
 export default contactSlice.reducer;

@@ -1,16 +1,16 @@
 /* Sidebar */
 .sidebar-nav {
-    background: #157347;
+    background: #0b3c5d;
     min-height: 100vh;
     padding: 16px 12px;
 }
 
 /* Logo */
 .logo {
-    text-align: center;
+    text-align: left;
     font-weight: 700;
     margin-bottom: 16px;
-    color: #38f898;
+    padding-left: 48px;
 }
 
 /* Menu */
@@ -40,15 +40,14 @@
 
 /* Hover */
 .sidebar-link:hover {
-    background: rgba(56, 189, 248, 0.15);
-    color: #38f8ae !important;
-    text-decoration: none !important;
+    background: rgba(56, 189, 248, 0.25);
+    color: #ffffff !important;
+    text-decoration: none;
 }
 
-/* Active */
 .sidebar-link.active {
-    background: #26c97d;
-    color: #0f172a !important;
+    background: #145374;
+    color: #ffffff !important;
     font-weight: 600;
 }
 

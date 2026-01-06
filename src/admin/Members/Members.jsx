@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMembers, fetchMemberById, resetMembersState } from "../../features/membersSlice";
+import { fetchMembers, fetchMemberById, resetMembersState,deleteMember } from "../../features/membersSlice";
 import { Eye, UserCheck, UserX, Clock, X, Edit, Trash2 } from "lucide-react";
-// import { updateMember } from "../../features/membersSlice";
 import { toast } from "react-toastify";
 import { verifyMember } from "../../features/membersSlice";
 
@@ -57,26 +56,6 @@ const Members = () => {
             prev.length === members.length ? [] : members.map((m) => m._id)
         );
     };
-    // const handleUpdate = () => {
-    //     if (!SelectedMember) return;
-
-    //     // Prepare payload
-    //     const updatedData = {
-    //         ...SelectedMember,
-    //         membershipStatus,
-    //     };
-
-    //     dispatch(updateMember({ id: SelectedMember._id, updatedData }))
-    //         .unwrap()
-    //         .then(() => {
-    //             toast.success("Member updated successfully");
-    //             closeModal();
-    //             dispatch(fetchMembers({ page: currentPage, limit: 10 })); // refresh table
-    //         })
-    //         .catch((err) => {
-    //             toast.error(err || "Update failed");
-    //         });
-    // };
 
     const handleVerify = (status) => {
         if (!SelectedMember) return;
@@ -101,6 +80,23 @@ const Members = () => {
                 toast.error(err || "Verification failed");
             });
     };
+
+    // deleteMember
+const handleDelete = (id) => {
+  if (!window.confirm("Are you sure you want to delete this member?")) {
+    return;
+  }
+
+  dispatch(deleteMember(id))
+    .unwrap()
+    .then(() => {
+      toast.success("Member deleted successfully");
+      dispatch(fetchMembers({ page: currentPage, limit: 10 }));
+    })
+    .catch((err) => {
+      toast.error(err || "Delete failed");
+    });
+};
 
 
     const getStatusBadge = (status) => {
@@ -136,6 +132,36 @@ const Members = () => {
             </div>
         );
     }
+
+    const renderDocument = (url, label) => {
+        if (!url) return <p>-</p>;
+
+        const isPDF = url.toLowerCase().endsWith(".pdf");
+
+        if (isPDF) {
+            return (
+                <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-sm btn-outline-primary w-100"
+                >
+                    <i className="bi bi-file-earmark-pdf me-1"></i>
+                    View {label}
+                </a>
+            );
+        }
+
+        return (
+            <img
+                src={url}
+                alt={label}
+                className="img-fluid border rounded"
+                style={{ maxHeight: "160px", objectFit: "cover" }}
+            />
+        );
+    };
+
 
     return (
         <div className="members-container">
@@ -179,13 +205,13 @@ const Members = () => {
                                                 onChange={() => handleCheckbox(member._id)}
                                             />
                                         </td>
-                                        <td className="fw-semibold">
+                                        <td className="fw-semibold"  style={{ whiteSpace: "nowrap" }}>
                                             {`${member.firstName} ${member.lastName}`}
                                         </td>
                                         <td style={{ textAlign: "center" }}>
                                             {showValue(member.relationName)}
                                         </td>
-                                        <td>
+                                        <td  style={{ whiteSpace: "nowrap" }}>
 
                                             {member.createdAt
                                                 ? new Date(member.createdAt).toLocaleString("en-GB", {
@@ -206,16 +232,6 @@ const Members = () => {
                                         <td style={{ textAlign: "center" }}>
                                             <div className="d-inline-flex align-items-center gap-2 justify-content-center">
 
-                                                {/* <button
-                                                    onClick={() => {
-                                                        setIsEditMode(false);
-                                                        handleViewDetails(member)
-                                                    }}
-                                                    className="btn btn-outline-success btn-sm d-flex align-items-center gap-1"
-                                                >
-                                                    <Eye size={16} strokeWidth={2} />
-                                                    View
-                                                </button> */}
 
                                                 <button
                                                     className="btn btn-outline-primary btn-sm d-flex align-items-center gap-1"
@@ -284,7 +300,7 @@ const Members = () => {
                         alignItems: "center",
                         justifyContent: "center",
                         backdropFilter: "blur(5px)",
-                        backgroundColor: "rgba(0,0,0,0.2)", // IMPORTANT
+                        backgroundColor: "rgba(0,0,0,0.2)", 
 
                     }}
                     onClick={closeModal}
@@ -411,8 +427,7 @@ const Members = () => {
                                     />
                                     <label className="form-check-label">Traveling</label>
                                 </div>
-                                {/* Documents */}
-                                {/* Uploaded Documents */}
+                                  {/* Uploaded Documents */}
                                 <div className="row g-3 mt-4">
                                     <div className="col-12">
                                         <h6 className="section-title">Uploaded Documents</h6>
@@ -420,55 +435,36 @@ const Members = () => {
 
                                     <div className="col-md-3">
                                         <label>Identity Proof</label>
-                                        {SelectedMember.identityProofDocument ? (
-                                            <img
-                                                src={SelectedMember.identityProofDocument}
-                                                alt="Identity Proof"
-                                                className="img-fluid border rounded"
-                                            />
-                                        ) : (
-                                            <p>-</p>
+                                        {renderDocument(
+                                            SelectedMember.identityProofDocument,
+                                            "Identity Proof"
                                         )}
                                     </div>
 
                                     <div className="col-md-3">
                                         <label>Address Proof</label>
-                                        {SelectedMember.addressProofDocument ? (
-                                            <img
-                                                src={SelectedMember.addressProofDocument}
-                                                alt="Address Proof"
-                                                className="img-fluid border rounded"
-                                            />
-                                        ) : (
-                                            <p>-</p>
+                                        {renderDocument(
+                                            SelectedMember.addressProofDocument,
+                                            "Address Proof"
                                         )}
                                     </div>
 
                                     <div className="col-md-3">
                                         <label>Ownership Proof</label>
-                                        {SelectedMember.ownershipProofDocument ? (
-                                            <img
-                                                src={SelectedMember.ownershipProofDocument}
-                                                alt="Ownership Proof"
-                                                className="img-fluid border rounded"
-                                            />
-                                        ) : (
-                                            <p>-</p>
+                                        {renderDocument(
+                                            SelectedMember.ownershipProofDocument,
+                                            "Ownership Proof"
                                         )}
                                     </div>
 
                                     <div className="col-md-3">
                                         <label>Applicant Photo</label>
-                                        {SelectedMember.applicantPhoto ? (
-                                            <img
-                                                src={SelectedMember.applicantPhoto}
-                                                alt="Applicant"
-                                                className="img-fluid border rounded"
-                                            />
-                                        ) : (
-                                            <p>-</p>
+                                        {renderDocument(
+                                            SelectedMember.applicantPhoto,
+                                            "Applicant Photo"
                                         )}
                                     </div>
+
                                 </div>
                                 {/* Signature */}
                                 <div className="row mt-4">
@@ -517,14 +513,7 @@ const Members = () => {
                         </div>
 
                         <div className="modal-footer">
-                            {isEditMode && (
-                                <button
-                                    onClick={() => handleVerify(true)} // pass true for verify
-                                    className="btn btn-success me-2"
-                                >
-                                    Verify Member
-                                </button>
-                            )}
+
 
                             {isEditMode && (
                                 <button
@@ -532,6 +521,15 @@ const Members = () => {
                                     className="btn btn-danger me-2"
                                 >
                                     Reject
+                                </button>
+                            )}
+
+                            {isEditMode && (
+                                <button
+                                    onClick={() => handleVerify(true)} // pass true for verify
+                                    className="btn btn-success me-2"
+                                >
+                                    Verify Member
                                 </button>
                             )}
 

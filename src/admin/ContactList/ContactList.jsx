@@ -4,12 +4,18 @@ import { getAllContacts } from "../../features/contactusSlice";
 
 const ContactList = () => {
   const dispatch = useDispatch();
-  const { contacts, loading } = useSelector((state) => state.contact);
+  const { contacts, loading, totalPages, page } = useSelector(
+    (state) => state.contact
+  );
   const [selectedContact, setSelectedContact] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const limit = 10;
+
 
   useEffect(() => {
-    dispatch(getAllContacts());
-  }, [dispatch]);
+    dispatch(getAllContacts({ page: currentPage, limit }));
+  }, [dispatch, currentPage]);
+
 
   if (loading) {
     return (
@@ -51,11 +57,17 @@ const ContactList = () => {
                     <td className="ps-4">
                       <div className="d-flex align-items-center gap-3">
                         <div
-                          className="rounded-circle bg-success text-white fw-bold d-flex justify-content-center align-items-center shadow-sm"
-                          style={{ width: 42, height: 42 }}
+                          className="rounded-circle text-white d-flex justify-content-center align-items-center shadow-sm"
+                          style={{
+                            width: 42,
+                            height: 42,
+                            background: "#6366f1"
+                          }}
                         >
-                          {item.name?.charAt(0).toUpperCase()}
+                          <i className="bi bi-person-fill fs-5"></i>
                         </div>
+
+
                         <div>
                           <div className="fw-semibold">{item.name}</div>
                           <small className="text-muted">
@@ -100,13 +112,33 @@ const ContactList = () => {
                 )}
               </tbody>
             </table>
+            <div className="pagination-wrapper">
+              <span className="text-muted">Page {page} of {totalPages}</span>
+              <div>
+                <button
+                  disabled={currentPage === 1}
+                  onClick={() => setCurrentPage((p) => p - 1)}
+                  className="btn btn-outline-secondary btn-sm me-2"
+                >
+                  Previous
+                </button>
+                <button
+                  disabled={currentPage === totalPages}
+                  onClick={() => setCurrentPage((p) => p + 1)}
+                  className="btn btn-outline-secondary btn-sm"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
 
       {/* ================= MODAL ================= */}
       <div
-        className="modal fade"
+        className="modal fade custom-modal"
         id="viewContactModal"
         tabIndex="-1"
         aria-hidden="true"
@@ -115,7 +147,10 @@ const ContactList = () => {
           <div className="modal-content rounded-4 shadow">
 
             {/* Header */}
-            <div className="modal-header bg-success text-white">
+            <div
+              className="modal-header text-white"
+              style={{ background: "#6366f1" }}
+            >
               <h5 className="modal-title fw-bold">
                 <i className="bi bi-eye me-2"></i>
                 Contact Details

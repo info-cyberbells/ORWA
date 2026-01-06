@@ -1,3 +1,5 @@
+import { Delete } from "lucide-react";
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const USER_ENDPOINTS = {
@@ -10,6 +12,7 @@ export const USER_ENDPOINTS = {
   GET_CONTACT_LIST: `${API_BASE_URL}/contact-us/admin`,
   VERIFY_MEMBER: `${API_BASE_URL}/admin/residential/verify-member`,
     UPDATE_RESIDENTIALS: `${API_BASE_URL}/admin/residential`,
+    DELETE_RESIDENTIALS:`${API_BASE_URL}/admin/residential`
 
 
 };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchResidentialMembers, fetchMemberById, resetMembersState } from "../../features/membersSlice";
+import { fetchResidentialMembers, fetchMemberById, resetMembersState, deleteMember } from "../../features/membersSlice";
 import { Eye, UserCheck, UserX, Clock, X, Edit, Trash2 } from "lucide-react";
 import { updateMember } from "../../features/membersSlice";
 import { toast } from "react-toastify";
@@ -74,6 +74,20 @@ const Residential = () => {
         toast.error(err || "Update failed");
       });
   };
+  // deleteMember
+  const handleDelete = (id) => {
+    if (!window.confirm("Are you sure you want to delete this member?")) return;
+
+    dispatch(deleteMember(id))
+      .unwrap()
+      .then(() => {
+        toast.success("Member deleted successfully");
+        dispatch(fetchResidentialMembers({ page: currentPage, limit: 10 })); // table refresh
+      })
+      .catch((err) => {
+        toast.error(err || "Delete failed");
+      });
+  };
 
 
   const getStatusBadge = (status) => {
@@ -114,9 +128,12 @@ const Residential = () => {
     <div className="members-container">
       <div className="container-fluid">
         <div className="members-header">
-          <h1>Residential-List</h1>
-          <p className="text-muted">Manage and view all society members</p>
+          <h1>Residential List</h1>
+          <p className="text-muted">
+            Manage and view all residential records
+          </p>
         </div>
+
 
         {/* Members Table */}
         <div className="card">
@@ -152,7 +169,7 @@ const Residential = () => {
                         onChange={() => handleCheckbox(member._id)}
                       />
                     </td>
-                    <td className="fw-semibold"  style={{ whiteSpace: "nowrap" }}>
+                    <td className="fw-semibold" style={{ whiteSpace: "nowrap" }}>
                       {`${member.firstName} ${member.lastName}`}
                     </td>
                     <td style={{ textAlign: "center" }}>
@@ -180,15 +197,15 @@ const Residential = () => {
                       <div className="d-inline-flex align-items-center gap-2 justify-content-center">
 
                         <button
-                                                    onClick={() => {
-                                                        setIsEdit(false);
-                                                        handleViewDetails(member)
-                                                    }}
-                                                    className="btn btn-outline-success btn-sm d-flex align-items-center gap-1"
-                                                >
-                                                    <Eye size={16} strokeWidth={2} />
-                                                    View
-                                                </button>
+                          onClick={() => {
+                            setIsEditMode(false);
+                            handleViewDetails(member)
+                          }}
+                          className="btn btn-outline-success btn-sm d-flex align-items-center gap-1"
+                        >
+                          <Eye size={16} strokeWidth={2} />
+                          View
+                        </button>
 
                         <button
                           className="btn btn-outline-primary btn-sm d-flex align-items-center gap-1"
@@ -209,6 +226,7 @@ const Residential = () => {
                           <Trash2 size={16} strokeWidth={2} />
                           Delete
                         </button>
+
 
 
                       </div>
