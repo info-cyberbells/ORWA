@@ -43,11 +43,11 @@ function App() {
 
         <Route element={<AppLayout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/Aboutus" element={<AboutUs />} />
+          <Route path="/about-us" element={<AboutUs />} />
           <Route path="/teamSlider" element={<TeamSlider />} />
           <Route path="/constitution" element={<Constitution />} />
-          <Route path="/events" element={<Events />} />
-          <Route path="/DandiyaNight" element={<DandiyaNight />} />
+          <Route path="/Events" element={<Events />} />
+          <Route path="/dandiyaNight" element={<DandiyaNight />} />
           <Route path="/DandiyaNightRegistration" element={<DandiyaNightRegistration />} />
           <Route path="/StallBooking" element={<StallBooking />} />
           <Route path="/AGM2025" element={<AGM2025 />} />

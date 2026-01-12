@@ -8,7 +8,6 @@ function TeamSlider() {
     const [slider, setSlider] = useState([
         {
             img: "./images/img5.jpg",
-            // img: "https://orwa.co.in/wp-content/uploads/2025/06/PK-Malhotra-150x150-1.jpg",
             title: "Mr. P.K. Malhotra",
             discription: "President",
             p: "Mr. Malhotra serves as the Chief Representative and leader of the residential community. Elected by the members of the association, he is the face of ORWA in dealings with OMAXE. He is responsible for guiding ORWA in fulfilling its mission to ensure the well-being, safety, and harmony of all residents. "
@@ -72,6 +71,8 @@ function TeamSlider() {
             p: "Mr. Malhotra serves as the Chief Representative and leader of the residential community. Elected by the members of the association, he is the face of ORWA in dealings with OMAXE. He is responsible for guiding ORWA in fulfilling its mission to ensure the well-being, safety, and harmony of all residents. "
 
         },
+
+       
     ]);
 
     const settings = {

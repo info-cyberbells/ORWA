@@ -35,10 +35,11 @@ const Constitution = () => {
     We encourage every member to familiarize themselves with the constitution to better understand
     how our community functions and how you can participate actively.
   </p>
-
+<a href="https://orwa.co.in/wp-content/uploads/2025/11/Constitution.pdf" target="_blank">
   <button className="btn btn-danger px-4 py-2 mt-3">
     Click here
   </button>
+</a>
 
 </div>
 

@@ -3,7 +3,7 @@ import React from 'react'
 const Home = () => {
   return (
     <div>
-      <div className="container">
+      <div className="container-fluid">
         <marquee behavior="scroll" direction="left" scrollamount="10" className="mar" >
           ORWA membership is open!!! &nbsp; ORWA membership is open!!! &nbsp; ORWA membership is open!!!
           &nbsp; ORWA membership is open!!! &nbsp; ORWA membership is open!!!
@@ -13,7 +13,7 @@ const Home = () => {
         </marquee>
       </div>
       {/* banner section */}
-      <div className="container">
+      <div className="container-fluid">
 
 
         <div id="carouselExampleIndicators" className="carousel slide">
@@ -166,13 +166,9 @@ const Home = () => {
       {/* Our Purpose section end */}
 
       {/* Explore Our Services */}
-
-
-
       <div className="services-section text-center mt-5  ">
         <h3 className=" fw-bold">Your Community, Together</h3>
-        <h3 className="text-success fw-bold ">      Explore Our Services
-        </h3>
+        <h3 className="text-success fw-bold ">Explore Our Services</h3>
        <p className="subtext mx-auto mb-3 ">
   Our Resident’s Association offers a variety of services to enhance community living. From social gatherings to informative resources, we’re here to support you. Join us in making our neighborhood a better place, and connect with fellow residents through our programs and events.
 </p>
@@ -223,9 +219,7 @@ const Home = () => {
     <button className="btn btn-outline-success p-2">Learn More</button>
   </div>
 </div>
-
-
-      {/* Explore Our Services  end*/}
+ {/* Explore Our Services  end*/}
 
       {/* Members' Experiences */}
       <div className="container-fluid bg-color py-5">
@@ -259,22 +253,18 @@ const Home = () => {
       <div className='container-fluid'>
         <div className="row">
 
-          <div className="col-md-6 bg-color text-center text-white py-1">
+          <div className="col bg-color text-center text-white py-1">
             <h3 className="fw-bold text-white">Get Involved!</h3>
 
             <h4 className="fw-bold px-3">
               Become a member today and strengthen our community!
             </h4>
 
-            <button
-              className="btn btn-outline-light mt-4 px-4 py-2 mb-2 border-radius-5"
-
-            >
+            <button className="btn btn-outline-light mt-4 px-4 py-2 mb-2 border-radius-5">
               Join Now
             </button>
           </div>
 
-          <div className="col-md-6 bg-white"></div>
 
         </div>
       </div>

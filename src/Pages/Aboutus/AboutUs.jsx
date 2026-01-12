@@ -5,77 +5,77 @@ const AboutUs = () => {
   return (
     <div>
       {/* banner section */}
-  <div className="position-relative">
-  <img  src="/images/img1.jpg" className="img-fluid Banner-img" alt="img" />
+      <div className="position-relative">
+        <img src="/images/img1.jpg" className="img-fluid Banner-img" alt="img" />
 
-  <div className="img-overlay">
-<div 
-    className="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center text-center px-3"
-  >
-    <div className="text-white About-text">
+        <div className="img-overlay">
+          <div
+            className="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center text-center px-3"
+          >
+            <div className="text-white About-text">
 
-      <div className="img-font mb-1">Welcome Home</div>
+              <div className="img-font mb-1">Welcome Home</div>
 
-      <span className="img-font d-block mb-3">
-        Join Our Vibrant Community
-      </span>
+              <span className="img-font d-block mb-3">
+                Join Our Vibrant Community
+              </span>
 
-      <p className="fs-6 mx-auto mb-3">
-        Welcome to our Resident’s Association! We’re here to connect neighbors,
-        support local events, and share valuable resources. Join us in creating
-        a stronger community where everyone feels at home.
-      </p>
+              <p className="fs-6 mx-auto mb-3">
+                Welcome to our Resident’s Association! We’re here to connect neighbors,
+                support local events, and share valuable resources. Join us in creating
+                a stronger community where everyone feels at home.
+              </p>
 
-      <div className="d-flex flex-wrap justify-content-center gap-3 mt-3">
-      <a href="/Volunteer"> <button className="banner-btn">Get Involved</button> </a> 
-     <button className="btn btn-outline-light">Learn More</button>
+              <div className="d-flex flex-wrap justify-content-center gap-3 mt-3">
+                <a href="/Volunteer"> <button className="banner-btn">Get Involved</button> </a>
+                <button className="btn btn-outline-light">Learn More</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
       </div>
-
-    </div>
-  </div>
-  </div>
-</div>
 
       {/* banner section  end */}
 
-{/* Our Mession section */}
-     <div className="container section-box mt-5">
-  <div className="row align-items-center">
+      {/* Our Mession section */}
+      <div className="container section-box mt-5">
+        <div className="row align-items-center">
 
-    {/* Text Section */}
-    <div className="col-md-6 mb-4">
-      <div className="mission-text text-center text-md-start">
+          {/* Text Section */}
+          <div className="col-md-6 mb-4">
+            <div className="mission-text text-center text-md-start">
 
-        <h3 className="mission-title">Our Mission and Values</h3>
+              <h3 className="mission-title">Our Mission and Values</h3>
 
-        <p className="mission-desc">
-          We are dedicated to building a vibrant community by fostering connections
-          and providing resources that uplift residents. Our mission is to increase
-          engagement, promote events, and offer support in various community services.
-        </p>
+              <p className="mission-desc">
+                We are dedicated to building a vibrant community by fostering connections
+                and providing resources that uplift residents. Our mission is to increase
+                engagement, promote events, and offer support in various community services.
+              </p>
 
-     <a href="/Constitution">  <button className="btn learn-btn">Learn More</button></a>     
+              <a href="/Constitution">  <button className="btn learn-btn">Learn More</button></a>
 
+            </div>
+          </div>
+
+          {/* Image Section */}
+          <div className="col-md-6 mb-4 d-flex justify-content-center">
+            <img
+              src="/images/img4.jpg"
+              className="img-fluid mission-img"
+              alt="mission-image"
+            />
+          </div>
+
+        </div>
       </div>
-    </div>
 
-    {/* Image Section */}
-    <div className="col-md-6 mb-4 d-flex justify-content-center">
-      <img 
-        src="/images/img4.jpg" 
-        className="img-fluid mission-img"
-        alt="mission-image" 
-      />
-    </div>
-
-  </div>
-</div>
-
-{/* Our Mession section end */}
+      {/* Our Mession section end */}
 
 
 
-{/* Our Journey section */}
+      {/* Our Journey section */}
 
       <div className="container  my-5">
 
@@ -107,7 +107,8 @@ const AboutUs = () => {
                     alt="more-than"
                     className="ms-1"
                   />
-                </a>        </div>
+                </a>
+              </div>
             </div>
 
             <div className="timeline-card mb-4">
@@ -151,30 +152,34 @@ const AboutUs = () => {
         </div>
       </div>
 
-{/* Our Journey section  end*/}
+      {/* Our Journey section  end*/}
 
 
-{/* slider section */}
-<div className="container my-5">
+      {/* slider section */}
+      <div className="container my-5">
 
-  <div className="text-center mb-4">
-    <h4>Meet Our Team</h4>
-    <h5 className="fw-bold">Introducing Our Team</h5>
-    <p className="text-muted">
-      Our dedicated team works tirelessly to enhance our community.
-    </p>
-  </div>
+        <div className="text-center mb-4">
+          <h4>Meet Our Team</h4>
+          <h5 className="fw-bold">Introducing Our Team</h5>
+          <p className="text-muted">
+            Our dedicated team works tirelessly to enhance our community.
+          </p>
+        </div>
 
-  <div className="row g-4">
-  <TeamSlider/>
-  </div>
-</div>
-{/* slider section end */}
+        <div className="row g-4">
+          <TeamSlider />
+        </div>
+      </div>
+      {/* slider section end */}
 
- {/* Co-opt Members section */}
- <div className="container-fluid text-start mt-5 mb-5">
+      {/* Co-opt Members section */}
+      <div className="container-fluid text-start mt-5 mb-5">
         <h4 className="members-title">Co-opt Members</h4>
-
+<div className=''>
+  <p className='mb-1'>Mr. Iqbal Singh</p>
+<p className='mb-1'>Mr. Puneet Kalra</p>
+<p className='mb-0'>Mr. N.K.Rana</p>
+</div>
         <div className="lines-wrapper">
           <div className="line"></div>
           <div className="line"></div>
@@ -192,37 +197,37 @@ const AboutUs = () => {
           </p>
         </div>
       </div>
- {/* Co-opt Members section end */}
+      {/* Co-opt Members section end */}
 
 
       {/* join us Section */}
-<div className='container'>
+      <div className='container'>
 
 
- <section className=" d-flex justify-content-center align-items-center py-5 py-md-5 py-lg-5">
-    <div className="join-box text-center px-3 px-sm-4 px-md-5 py-4 py-md-5">
+        <section className=" d-flex justify-content-center align-items-center py-5 py-md-5 py-lg-5">
+          <div className="join-box text-center px-3 px-sm-4 px-md-5 py-4 py-md-5">
 
-      <h4 className="fw-bold text-success fs-4 fs-md-3">
-        Join Us and Make a Difference Today!
-      </h4>
+            <h4 className="fw-bold text-success fs-4 fs-md-3">
+              Join Us and Make a Difference Today!
+            </h4>
 
-      <p className="mt-2 mb-4 text-dark">
-        Become a valued member of our community! Joining us opens doors to exclusive events,
-        access to resources, and a chance to connect with your neighbors. Enjoy the benefits
-        of being part of a supportive network that enhances our community.
-      </p>
+            <p className="mt-2 mb-4 text-dark">
+              Become a valued member of our community! Joining us opens doors to exclusive events,
+              access to resources, and a chance to connect with your neighbors. Enjoy the benefits
+              of being part of a supportive network that enhances our community.
+            </p>
 
-      <div className="d-flex justify-content-center gap-3 flex-wrap">
-      <a href="/JoinUs"><button className="btn btn-outline-danger px-4">Join Now</button> </a>  
-    <a href="/Volunteer">  <button className="btn btn-outline-success px-4">Volunteer</button></a>   
+            <div className="d-flex justify-content-center gap-3 flex-wrap">
+              <a href="/JoinUs"><button className="btn btn-outline-danger px-4">Join Now</button> </a>
+              <a href="/Volunteer">  <button className="btn btn-outline-success px-4">Volunteer</button></a>
+            </div>
+
+          </div>
+        </section>
       </div>
-
-    </div>
-  </section>
-</div>
       {/* join us Section  end*/}
 
- </div>
+    </div>
   )
 }
 
