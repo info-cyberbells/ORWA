@@ -23,13 +23,7 @@ const Sidebar = () => {
       </h4>
 
       <ul className="sidebar-menu">
-        {/* <li>
-          <NavLink to="/dashboard" className="sidebar-link">
-            <i className="bi bi-house-door"></i>
-            <span>Home</span>
-          </NavLink>
-        </li> */}
-
+  
         <li>
           <NavLink to="/admin-members" className="sidebar-link">
             <i className="bi bi-person-badge"></i>
@@ -49,26 +43,7 @@ const Sidebar = () => {
           </NavLink>
         </li>
 
-        {/* <li>
-          <NavLink to="/Discussions" className="sidebar-link">
-            <i className="bi bi-chat-dots"></i>
-            <span>Discussions</span>
-          </NavLink>
-        </li>
-
-        <li>
-          <NavLink to="/Events" className="sidebar-link">
-            <i className="bi bi-calendar-event"></i>
-            <span>Events</span>
-          </NavLink>
-        </li>
-
-        <li>
-          <NavLink to="/Settings" className="sidebar-link">
-            <i className="bi bi-gear"></i>
-            <span>Settings</span>
-          </NavLink>
-        </li> */}
+        
 
         <li>
           <button onClick={handleLogout} className="sidebar-link logout-btn">

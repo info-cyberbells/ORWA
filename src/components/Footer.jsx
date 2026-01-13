@@ -41,7 +41,7 @@ const Footer = () => {
               <li><a href="/OmaxeNews">Omaxe News</a></li>
               <li><a href="/FAQs">FAQs</a></li>
               <li><a href="/ContactUs">Contact</a></li>
-              <li><a href="/RefundPolicy">Refund & Returns Policy</a></li>
+              <li><a href="/privacy-policy">Privacy Policy</a></li>
             </ul>
           </div>
 
