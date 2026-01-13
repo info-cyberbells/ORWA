@@ -25,7 +25,7 @@ import ContactUs from './Pages/ContactUs/ContactUs'
 import TeamCondition from './Pages/Terms&Conditions/TeamCondition'
 import OmaxeNews from './Pages/OmaxeNews/OmaxeNews'
 import FAQs from './Pages/FAQs/FAQS'
-import RefundPolicy from './Pages/Refund Policy/RefundPolicy'
+import PrivacyPolicy from "./Pages/PrivacyPolicy/PrivacyPolicy";
 import ApplicationFrom from "./Pages/ApplicationFrom/ApplicationFrom"
 
 
@@ -61,7 +61,7 @@ function App() {
           <Route path="/TeamCondition" element={<TeamCondition />} />
           <Route path="/OmaxeNews" element={<OmaxeNews />} />
           <Route path="/FAQs" element={<FAQs />} />
-          <Route path="/RefundPolicy" element={<RefundPolicy />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/ApplicationFrom" element={<ApplicationFrom />} />
 
         </Route>
@@ -73,7 +73,7 @@ function App() {
         <Route element={<AuthLayout />}>
           <Route path="/admin-dashboard" element={<Dashboard />} />
           <Route path="/admin-members" element={<Members />} />
-          <Route path="/admin-residential" element={<Residential/>} />
+          <Route path="/admin-residential" element={<Residential />} />
           <Route path="/admin-contactList" element={<ContactList />} />
 
         </Route>

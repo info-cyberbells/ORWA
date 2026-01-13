@@ -1,0 +1,61 @@
+.policy-box {
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+}
+
+/* Whole card hover */
+.policy-box:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Intro text */
+.policy-intro {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #495057;
+}
+
+/* Section wrapper */
+.policy-section {
+  margin-top: 1.75rem;
+  padding: 0.75rem 0.5rem;
+  border-radius: 6px;
+  transition: background 0.25s ease;
+}
+
+/* Section hover */
+.policy-section:hover {
+  background: #f8f9fa;
+}
+
+/* Title styling */
+.policy-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #198754;
+  border-left: 4px solid #198754;
+  padding-left: 12px;
+  margin-bottom: 0.5rem;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Title hover */
+.policy-section:hover .policy-title {
+  color: #146c43;
+  border-left-color: #146c43;
+}
+
+/* Paragraph text */
+.policy-section p {
+  line-height: 1.7;
+  color: #555;
+}
+
+/* Divider */
+.policy-box hr {
+  margin: 2rem 0;
+  opacity: 0.1;
+}
