@@ -61,14 +61,15 @@ const Footer = () => {
           <div className="col-12 col-md-3">
 
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3430.7473648625337!2d76.78071417446648!3d30.697383474601306!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390fec8cc0000001%3A0x5c3a559a3e1208f1!2sCyberbells%20ITES%20Services%20Pvt.%20Ltd!5e0!3m2!1sen!2sin!4v1765451290831!5m2!1sen!2sin"
-              width="350"
-              height="200"
-              style={{ border: 0, borderRadius: 5 }}
-              allowFullScreen=""
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
+                src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d54835.216360329!2d76.68741942985564!3d30.796996494748306!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sOmaxe%20Township%2C%20New%20Chandigarh%2C140901!5e0!3m2!1sen!2sin!4v1768306911851!5m2!1sen!2sin"
+                width="360"
+                height="200"
+                style={{ border: 0, borderRadius: "8px" }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Omaxe Township Location"
+              ></iframe>
           </div>
 
         </div>
