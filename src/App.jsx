@@ -25,16 +25,15 @@ import ContactUs from './Pages/ContactUs/ContactUs'
 import TeamCondition from './Pages/Terms&Conditions/TeamCondition'
 import OmaxeNews from './Pages/OmaxeNews/OmaxeNews'
 import FAQs from './Pages/FAQs/FAQS'
-import PrivacyPolicy from "./Pages/PrivacyPolicy/PrivacyPolicy";
+import PrivacyPolicy from "./Pages/PrivacyPolicy/PrivacyPolicy"
 import ApplicationFrom from "./Pages/ApplicationFrom/ApplicationFrom"
-
 
 // Admin
 import AdminLogin from './admin/Adminlogin'
 import Dashboard from './admin/Dashboard'
 import Members from './admin/Members/Members'
 import Residential from './admin/Members/Residential'
-import ContactList from "./admin/ContactList/ContactList";
+import ContactList from "./admin/ContactList/ContactList"
 
 function App() {
   return (
@@ -46,36 +45,34 @@ function App() {
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/teamSlider" element={<TeamSlider />} />
           <Route path="/constitution" element={<Constitution />} />
-          <Route path="/Events" element={<Events />} />
+          <Route path="/events" element={<Events />} />
           <Route path="/dandiyaNight" element={<DandiyaNight />} />
-          <Route path="/DandiyaNightRegistration" element={<DandiyaNightRegistration />} />
-          <Route path="/StallBooking" element={<StallBooking />} />
+          <Route path="/dandiyaNightRegistration" element={<DandiyaNightRegistration />} />
+          <Route path="/stallBooking" element={<StallBooking />} />
           <Route path="/AGM2025" element={<AGM2025 />} />
           <Route path="/AGMs" element={<AGMs />} />
           <Route path="/AGMArchiveSection" element={<AGMArchiveSection />} />
           <Route path="/AGMViewDetails2025" element={<AGMViewDetails2025 />} />
-          <Route path="/Memberdirectory" element={<Memberdirectory />} />
-          <Route path="/JoinUs" element={<JoinUs />} />
-          <Route path="/Volunteer" element={<Volunteer />} />
-          <Route path="/ContactUs" element={<ContactUs />} />
-          <Route path="/TeamCondition" element={<TeamCondition />} />
-          <Route path="/OmaxeNews" element={<OmaxeNews />} />
+          <Route path="/memberdirectory" element={<Memberdirectory />} />
+          <Route path="/joinUs" element={<JoinUs />} />
+          <Route path="/volunteer" element={<Volunteer />} />
+          <Route path="/contactUs" element={<ContactUs />} />
+          <Route path="/teamCondition" element={<TeamCondition />} />
+          <Route path="/omaxeNews" element={<OmaxeNews />} />
           <Route path="/FAQs" element={<FAQs />} />
-          <Route path="/privacy-Policy" element={<PrivacyPolicy />} />
-          <Route path="/ApplicationFrom" element={<ApplicationFrom />} />
-
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/applicationFrom" element={<ApplicationFrom />} />
         </Route>
 
-        {/*  ADMIN LOGIN (NO Header / NO Footer) */}
+        {/* ADMIN LOGIN (NO Header / NO Footer) */}
         <Route path="/admin-login" element={<AdminLogin />} />
 
         {/* ADMIN PANEL */}
         <Route element={<AuthLayout />}>
           <Route path="/admin-dashboard" element={<Dashboard />} />
           <Route path="/admin-members" element={<Members />} />
-          <Route path="/admin-residential" element={<Residential/>} />
+          <Route path="/admin-residential" element={<Residential />} />
           <Route path="/admin-contactList" element={<ContactList />} />
-
         </Route>
 
       </Routes>

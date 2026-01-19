@@ -18,9 +18,9 @@ const Memberdirectory = () => {
           </p>
 
           <div className="member-actions">
-        <a href="/JoinUs">   <button className="btn btn-danger">Join Us</button></a>  
-          <a href="https://orwa.co.in/list-of-members">   <button className="btn btn-outline-light">Volunteer</button> </a>      
-  <a href="https://orwa.co.in/list-of-members"><button className="btn btn-outline-light">Current Members</button> </a>   
+            <a href="/JoinUs">   <button className="btn btn-danger">Join Us</button></a>
+            <a href="https://orwa.co.in/list-of-members">   <button className="btn btn-outline-light">Volunteer</button> </a>
+            <a href="https://orwa.co.in/list-of-members"><button className="btn btn-outline-light">Current Members</button> </a>
           </div>
 
         </div>
@@ -88,24 +88,24 @@ const Memberdirectory = () => {
       {/* FeedBack Section end */}
 
 
-{/* Managing Committee */}
+      {/* Managing Committee */}
 
-<div className="container my-5 ">
+      <div className="container my-5 ">
 
-  <div className="text-center mb-4">
-    <h4>Meet Our Managing Committee
-</h4>
-    <p className="text-muted">
-Discover the voices behind our community. Each member brings unique strengths and stories.
-    </p>
-  </div>
+        <div className="text-center mb-4">
+          <h4>Meet Our Managing Committee
+          </h4>
+          <p className="text-muted">
+            Discover the voices behind our community. Each member brings unique strengths and stories.
+          </p>
+        </div>
 
-  <div className="row g-4 mt-4">
-  <TeamSlider/>
-  </div>
-</div>
+        <div className="row g-4 mt-4">
+          <TeamSlider />
+        </div>
+      </div>
 
-{/* Managing Committee end */}
+      {/* Managing Committee end */}
 
 
       {/* Featured Members */}
@@ -190,41 +190,42 @@ Discover the voices behind our community. Each member brings unique strengths an
         <div className="row  align-items-center g-4">
 
           {/* <!-- Map --> */}
-       <div className="row align-items-center">
-  
-  <div className="col-md-6 mb-4 mb-md-0">
-      <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3430.7473648625337!2d76.78071417446648!3d30.697383474601306!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390fec8cc0000001%3A0x5c3a559a3e1208f1!2sCyberbells%20ITES%20Services%20Pvt.%20Ltd!5e0!3m2!1sen!2sin!4v1765451290831!5m2!1sen!2sin"
-          width="100%"
-          height="400"
-          style={{ border: 0, borderRadius: 4 }}
-          allowFullScreen=""
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        ></iframe>
-  </div>
+          <div className="row align-items-center">
 
-  <div className="col-md-6">
-    <h5 className="fw-semibold mb-2">We’re Happy to Help</h5>
+            <div className="col-md-6 mb-4 mb-md-0">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d54835.216360329!2d76.68741942985564!3d30.796996494748306!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sOmaxe%20Township%2C%20New%20Chandigarh%2C140901!5e0!3m2!1sen!2sin!4v1768306911851!5m2!1sen!2sin"
+                width="100%"
+                height="400"
+                style={{ border: 0, borderRadius: "8px" }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Omaxe Township Location"
+              ></iframe>
+            </div>
 
-    <p className="text-muted">
-      Have a question or need information? Reach out to us anytime.
-      We’re always here to support our community members.
-    </p>
+            <div className="col-md-6">
+              <h5 className="fw-semibold mb-2">We’re Happy to Help</h5>
 
-    <p className="d-flex align-items-center gap-2 mt-3 fw-semibold">
-      <i className="bi bi-envelope-fill text-success"></i>
-      info@orwa.co.in
-    </p>
+              <p className="text-muted">
+                Have a question or need information? Reach out to us anytime.
+                We’re always here to support our community members.
+              </p>
 
-    <div className="d-flex gap-3 mt-3">
-      <span className="contact-icon"><i className="bi bi-facebook"></i></span>
-      <span className="contact-icon"><i className="bi bi-twitter"></i></span>
-      <span className="contact-icon"><i className="bi bi-instagram"></i></span>
-    </div>
-  </div>
+              <p className="d-flex align-items-center gap-2 mt-3 fw-semibold">
+                <i className="bi bi-envelope-fill text-success"></i>
+                info@orwa.co.in
+              </p>
 
-</div>
+              <div className="d-flex gap-3 mt-3">
+                <span className="contact-icon"><i className="bi bi-facebook"></i></span>
+                <span className="contact-icon"><i className="bi bi-twitter"></i></span>
+                <span className="contact-icon"><i className="bi bi-instagram"></i></span>
+              </div>
+            </div>
+
+          </div>
 
 
 

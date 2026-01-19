@@ -1,5 +1,6 @@
 import React from "react";
-import "./PrivacyPolicy.css"
+import "./PrivacyPolicy.css";
+
 const PrivacyPolicy = () => {
   return (
     <section className="container my-5">
@@ -8,10 +9,6 @@ const PrivacyPolicy = () => {
         <h2 className="text-success fw-bold mb-1 text-center">
           Privacy Policy
         </h2>
-
-        {/* <p className="fw-semibold text-center mb-0">
-          Omaxe Residents Welfare Association (ORWA)
-        </p> */}
 
         <p className="text-muted text-center mb-4">
           Effective Date: 01/01/2026
@@ -36,7 +33,6 @@ const PrivacyPolicy = () => {
           </p>
         </div>
 
-  
         <div className="policy-section">
           <h5 className="policy-title">2. How We Collect Information</h5>
           <p>
@@ -46,7 +42,6 @@ const PrivacyPolicy = () => {
           </p>
         </div>
 
-      
         <div className="policy-section">
           <h5 className="policy-title">3. Purpose of Collection</h5>
           <p>
@@ -56,7 +51,6 @@ const PrivacyPolicy = () => {
           </p>
         </div>
 
-     
         <div className="policy-section">
           <h5 className="policy-title">4. Sharing of Information</h5>
           <p>
@@ -65,7 +59,6 @@ const PrivacyPolicy = () => {
             by law or for operational purposes.
           </p>
         </div>
-
 
         <div className="policy-section">
           <h5 className="policy-title">5. Data Security</h5>
@@ -84,7 +77,6 @@ const PrivacyPolicy = () => {
           </p>
         </div>
 
-   
         <div className="policy-section">
           <h5 className="policy-title">7. Your Rights</h5>
           <p>
@@ -93,7 +85,6 @@ const PrivacyPolicy = () => {
           </p>
         </div>
 
-  
         <div className="policy-section">
           <h5 className="policy-title">8. Digital Communication</h5>
           <p>
@@ -110,7 +101,6 @@ const PrivacyPolicy = () => {
           </p>
         </div>
 
-   
         <div className="policy-section">
           <h5 className="policy-title">10. Changes to Policy</h5>
           <p>
@@ -119,11 +109,10 @@ const PrivacyPolicy = () => {
           </p>
         </div>
 
- 
         <div className="policy-section">
           <h5 className="policy-title">11. Contact Information</h5>
 
-          <p className="mb-1 ">
+          <p className="mb-1">
             Omaxe Residents Welfare Association (ORWA)
           </p>
 
